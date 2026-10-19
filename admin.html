@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADMIN FINAL 100% - Prates</title>
+<title>ADMIN FINAL 100% - Prates Auto Center</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
@@ -11,10 +11,11 @@
 <body class="bg-[#0f0f0f] text-white min-h-screen">
 <script>if(sessionStorage.getItem('adminLogado')!=='sim'){let s=prompt('🔒 Senha ADMIN:');if(s!=='prates304050'){alert('Senha incorreta');location.href='index.html';}else{sessionStorage.setItem('adminLogado','sim');}}</script>
 <header class="max-w-[1800px] mx-auto p-4 flex justify-between items-center border-b border-white/10">
-<div class="flex items-center gap-3"><img src="logo.png" class="w-[46px] h-[46px] bg-white rounded-[12px] p-1"><div><p class="font-black">PRATES ADMIN FINAL 100%</p><p class="text-[10px] opacity-50">Placa + Clientes + Veículos + Status 1 clique + Sem serviço obrigatório</p></div></div>
+<div class="flex items-center gap-3"><img src="logo.png" class="w-[46px] h-[46px] bg-white rounded-[12px] p-1"><div><p class="font-black">PRATES ADMIN FINAL 100%</p><p class="text-[10px] opacity-50">Controle por placa + Veículos + Status 1 clique + Sem serviço obrigatório</p></div></div>
 <div class="flex gap-2"><button onclick="exportar()" class="bg-white text-black rounded-full px-4 py-2 font-black text-[10px]">EXPORTAR CSV</button><a href="index.html" class="bg-[#FF5A00] rounded-full px-4 py-2 font-black text-[10px]">SITE</a></div>
 </header>
 <main class="max-w-[1800px] mx-auto p-4 grid lg:grid-cols-[1.1fr_0.5fr_1.3fr] gap-5">
+
 <div class="bg-white text-black rounded-[24px] p-5 h-fit space-y-4">
 <h2 class="font-black text-[14px]">ADICIONAR CLIENTE + VEÍCULO NO PAINEL</h2>
 <div class="space-y-2">
@@ -22,13 +23,13 @@
 <div class="grid grid-cols-2 gap-2">
 <input id="cliNome" placeholder="Nome cliente *" class="border-2 rounded-[10px] p-2.5 text-[12px] font-bold">
 <input id="cliZap" placeholder="Zap ex: 73999" class="border-2 rounded-[10px] p-2.5 text-[12px]">
-<input id="cliCpf" placeholder="CPF opcional" class="col-span-2 border-2 rounded-[10px] p-2.5 text-[12px] bg-yellow-50">
+<input id="cliCpf" placeholder="CPF opcional - agrupa veículos do mesmo cliente" class="col-span-2 border-2 rounded-[10px] p-2.5 text-[12px] bg-yellow-50">
 </div>
 <div class="bg-[#FFF0E6] border-2 border-orange-300 rounded-[12px] p-3">
-<p class="font-black text-[11px] text-[#FF5A00] flex justify-between items-center">2. VEÍCULO - CONTROLE POR PLACA <button onclick="toggleAddVeiculo()" class="bg-black text-white rounded-full px-3 py-1 text-[9px]">+ ADD VEÍCULO DETALHADO</button></p>
+<p class="font-black text-[11px] text-[#FF5A00] flex justify-between items-center">2. VEÍCULO - CONTROLE POR PLACA <button onclick="toggleAddVeiculo()" class="bg-black text-white rounded-full px-3 py-1 text-[9px]">+ ADD DETALHADO</button></p>
 <div id="formVeiculo" class="hidden mt-3 grid grid-cols-3 gap-2 bg-white p-3 rounded-[10px] border-2">
 <input id="vCarro" placeholder="Carro ex: Onix 1.0" class="border-2 rounded-[8px] p-2 text-[11px]">
-<input id="vPlaca" placeholder="PLACA *" class="border-2 rounded-[8px] p-2 text-[11px] uppercase font-black">
+<input id="vPlaca" placeholder="PLACA * ex: JLL7777" class="border-2 rounded-[8px] p-2 text-[11px] uppercase font-black">
 <input id="vAno" placeholder="Ano ex: 2020" class="border-2 rounded-[8px] p-2 text-[11px]">
 <input id="vCor" placeholder="Cor ex: Prata" class="border-2 rounded-[8px] p-2 text-[11px]">
 <input id="vKm" placeholder="KM atual" class="border-2 rounded-[8px] p-2 text-[11px]">
@@ -46,7 +47,7 @@
 </div>
 </div>
 <div class="border-2 border-dashed border-orange-300 rounded-[14px] p-3 bg-[#FFF9F5]">
-<p class="font-black text-[11px] text-[#FF5A00]">3. PEÇAS - OPCIONAL - TIPO POR PEÇA + ADD / EDITAR / REMOVER</p>
+<p class="font-black text-[11px] text-[#FF5A00]">3. PEÇAS - OPCIONAL - TIPO POR PEÇA</p>
 <div class="grid grid-cols-[1fr_105px_45px_75px_55px] gap-1.5 mt-2">
 <input id="itemNome" placeholder="Peça ex: Pastilha" class="border-2 rounded-[10px] p-2.5 text-[12px]">
 <select id="itemTipo" class="border-2 rounded-[10px] p-2 text-[9px] font-black"><option>ORIGINAL</option><option>PARALELA 1ª LINHA</option></select>
@@ -57,7 +58,7 @@
 <div id="listaItens" class="mt-2 space-y-1.5 max-h-[140px] overflow-auto bg-white rounded-[10px] p-2 border-2"></div>
 </div>
 <div class="grid grid-cols-2 gap-3 border-2 rounded-[12px] p-3">
-<div><label class="font-black text-[10px]">MÃO DE OBRA R$ (opcional)</label><input id="maoObra" type="number" placeholder="0" oninput="calc()" class="w-full border-2 rounded-[10px] p-2.5 text-[13px] font-bold mt-1"></div>
+<div><label class="font-black text-[10px]">MÃO DE OBRA R$</label><input id="maoObra" type="number" placeholder="0" oninput="calc()" class="w-full border-2 rounded-[10px] p-2.5 text-[13px] font-bold mt-1"></div>
 <div><label class="font-black text-[10px]">DESCONTO</label><div class="flex gap-1 mt-1"><input id="desconto" type="number" placeholder="0" oninput="calc()" class="flex-1 border-2 rounded-[10px] p-2.5 text-[13px]"><select id="tipoDesc" onchange="calc()" class="border-2 rounded-[10px] p-1 text-[10px] font-black"><option value="R$">R$</option><option value="%">%</option></select></div></div>
 <select id="formaPag" class="border-2 rounded-[10px] p-2.5 text-[11px] font-bold"><option>Pix</option><option>Dinheiro</option><option>Cartão Débito</option><option>Cartão Crédito</option><option>Parcelado</option><option>Pendente</option></select>
 <select id="statusPag" class="border-2 rounded-[10px] p-2.5 text-[11px] font-bold"><option>PENDENTE</option><option>PAGO</option><option>PARCIAL</option></select>
@@ -67,10 +68,11 @@
 </div>
 <div class="grid grid-cols-3 gap-2">
 <button onclick="gerarPDF()" class="bg-[#FF5A00] text-white rounded-[12px] py-3 font-black text-[11px]">GERAR PDF</button>
-<button onclick="salvar()" class="bg-black text-white rounded-[12px] py-3 font-black text-[11px]">SALVAR CLIENTE + PLACA NO PAINEL</button>
+<button onclick="salvar()" class="bg-black text-white rounded-[12px] py-3 font-black text-[11px]">SALVAR NO PAINEL</button>
 <button onclick="enviarZap()" class="bg-[#25D366] text-white rounded-[12px] py-3 font-black text-[11px]">ENVIAR ZAP</button>
 </div>
 </div>
+
 <div class="space-y-5">
 <div class="bg-white text-black rounded-[24px] p-5">
 <h2 class="font-black text-[13px]">💰 FINANCEIRO + OFICINA</h2>
@@ -82,42 +84,94 @@
 </div>
 <div class="mt-3 bg-gray-100 rounded-[12px] p-3 text-center"><p id="totalVeiculos" class="text-[11px] font-black">0 veículos | 0 serviços</p><p id="fatHoje" class="text-[12px] font-bold text-[#FF5A00] mt-1">R$ 0,00 hoje</p><p id="fatMes" class="text-[10px] opacity-60">Total geral: R$ 0,00</p></div>
 </div>
-<div class="bg-white text-black rounded-[24px] p-5"><h2 class="font-black text-[12px]">📋 COMO USAR - SEM SERVIÇO OBRIGATÓRIO</h2><div class="mt-2 p-3 bg-[#FFF9F5] border-2 rounded-[12px] text-[11px] font-bold">1. Nome + Placa + Carro > SALVAR<br>2. Já aparece no painel da direita<br><br>🔴 PEÇA = Aguardando peça<br>🟡 MANUT = Em manutenção<br>🔵 PRONTO = Pronto<br>✅ ENTREGUE = Entregue<br><br>Funciona sem serviço!</div></div>
+<div class="bg-white text-black rounded-[24px] p-5"><h2 class="font-black text-[12px]">📋 COMO USAR</h2><div class="mt-2 p-3 bg-[#FFF9F5] border-2 rounded-[12px] text-[11px] font-bold">1. Nome + Placa + Carro > SALVAR NO PAINEL<br>2. Sem serviço e sem peça - já aparece na direita<br>3. Botões 🔴 🟡 🔵 ✅ mudam o status<br><br>Funciona sem serviço!</div></div>
 </div>
+
 <div class="bg-white text-black rounded-[24px] p-4 flex flex-col h-[92vh]">
 <div class="flex justify-between items-center"><h2 class="font-black text-[14px]">👥 CONTROLE POR PLACA</h2><span id="resumo" class="bg-black text-white rounded-full px-3 py-1 text-[10px] font-black">0 placas</span></div>
 <div class="grid grid-cols-2 gap-2 mt-3">
 <input id="busca" oninput="render()" placeholder="Buscar PLACA, nome, carro, ano, cor, CPF..." class="col-span-2 border-2 border-orange-200 bg-orange-50 rounded-[10px] p-2.5 text-[12px] font-bold">
-<select id="filtroStatus" onchange="render()" class="border-2 rounded-[10px] p-2.5 text-[10px] font-black"><option value="">STATUS: TODOS</option><option>ORÇAMENTO</option><option>APROVADO</option><option>AGUARDANDO PEÇA</option><option>EM MANUTENÇÃO</option><option>PRONTO - AGUARDANDO RETIRADA</option><option>ENTREGUE</option><option>CANCELADO</option></select>
+<select id="filtroStatus" onchange="render()" class="border-2 rounded-[10px] p-2.5 text-[10px] font-black"><option value="">STATUS: TODOS</option><option>ORÇAMENTO</option><option>APROVADO</option><option>AGUARDANDO PEÇA</option><option>EM MANUTENÇÃO</option><option>PRONTO - AGUARDANDO RETIRADA</option><option>ENTREGUE</option></select>
 <select id="filtroEtiqueta" onchange="render()" class="border-2 rounded-[10px] p-2.5 text-[10px] font-black"><option value="">ETIQUETA: TODAS</option><option>⭐ VIP</option><option>⚠️ Devedor</option><option>💎 Fidelizado</option><option>🆕 Novo</option></select>
 </div>
 <div id="listaClientes" class="mt-3 space-y-3 overflow-auto flex-1 pr-1"></div>
 </div>
 </main>
+
 <script>
-let itens=JSON.parse(localStorage.getItem('itensOrc')||'[]');let clientes=JSON.parse(localStorage.getItem('clientesPrates')||'[]');let veiculos=JSON.parse(localStorage.getItem('veiculosPrates')||'[]');
+let itens=JSON.parse(localStorage.getItem('itensOrc')||'[]');
+let clientes=JSON.parse(localStorage.getItem('clientesPrates')||'[]');
+let veiculos=JSON.parse(localStorage.getItem('veiculosPrates')||'[]');
+
 function toggleAddVeiculo(){document.getElementById('formVeiculo').classList.toggle('hidden');renderVeiculosCadastrados();}
-function salvarVeiculo(){const carro=document.getElementById('vCarro').value.trim();const placa=document.getElementById('vPlaca').value.trim().toUpperCase();const ano=document.getElementById('vAno').value.trim();const cor=document.getElementById('vCor').value.trim();const km=document.getElementById('vKm').value.trim();const obs=document.getElementById('vObs').value.trim();let nome=document.getElementById('cliNome').value.trim();const cpf=document.getElementById('cliCpf').value.trim();const zap=document.getElementById('cliZap').value.trim();const statusSel=document.getElementById('statusOficina').value;if(!placa||!carro){alert('Carro e Placa obrigatórios');return;}if(!nome){let n=prompt('Nome do cliente para placa '+placa+':');if(!n)return;nome=n;document.getElementById('cliNome').value=n;}veiculos.unshift({id:Date.now(),nome,cpf,zap,carro,placa,ano,cor,km,obs,statusOficina:statusSel,data:new Date().toLocaleDateString('pt-BR')});localStorage.setItem('veiculosPrates',JSON.stringify(veiculos));document.getElementById('vCarro').value='';document.getElementById('vPlaca').value='';document.getElementById('vAno').value='';document.getElementById('vCor').value='';document.getElementById('vKm').value='';document.getElementById('vObs').value='';renderVeiculosCadastrados();render();atualizarFinanceiro();document.getElementById('cliCarro').value=carro;document.getElementById('cliPlaca').value=placa;document.getElementById('cliKm').value=km;alert('✅ Veículo '+placa+' adicionado no painel!');}
-function renderVeiculosCadastrados(){let html='';veiculos.slice(0,8).forEach(v=>{html+=`<div class="flex justify-between border-b py-1"><span class="font-bold">${v.placa} - ${v.carro} ${v.ano||''}</span><span>${v.nome}</span></div>`;});document.getElementById('listaVeiculosCadastrados').innerHTML=html||'<p class="opacity-50 py-2">Nenhum veículo ainda</p>';}
+function salvarVeiculo(){
+ const carro=document.getElementById('vCarro').value.trim();const placa=document.getElementById('vPlaca').value.trim().toUpperCase();const ano=document.getElementById('vAno').value.trim();const cor=document.getElementById('vCor').value.trim();const km=document.getElementById('vKm').value.trim();const obs=document.getElementById('vObs').value.trim();let nome=document.getElementById('cliNome').value.trim();const cpf=document.getElementById('cliCpf').value.trim();const zap=document.getElementById('cliZap').value.trim();const statusSel=document.getElementById('statusOficina').value;
+ if(!placa||!carro){alert('Carro e Placa obrigatórios');return;}
+ if(!nome){let n=prompt('Nome do cliente para placa '+placa+':');if(!n)return;nome=n;document.getElementById('cliNome').value=n;}
+ veiculos.unshift({id:Date.now(),nome,cpf,zap,carro,placa,ano,cor,km,obs,statusOficina:statusSel,data:new Date().toLocaleDateString('pt-BR')});
+ localStorage.setItem('veiculosPrates',JSON.stringify(veiculos));
+ document.getElementById('vCarro').value='';document.getElementById('vPlaca').value='';document.getElementById('vAno').value='';document.getElementById('vCor').value='';document.getElementById('vKm').value='';document.getElementById('vObs').value='';
+ renderVeiculosCadastrados();render();atualizarFinanceiro();
+ document.getElementById('cliCarro').value=carro;document.getElementById('cliPlaca').value=placa;document.getElementById('cliKm').value=km;
+ alert('✅ Veículo '+placa+' adicionado!');
+}
+function renderVeiculosCadastrados(){let html='';veiculos.slice(0,8).forEach(v=>{html+=`<div class="flex justify-between border-b py-1"><span class="font-bold">${v.placa} - ${v.carro}</span><span>${v.nome}</span></div>`;});document.getElementById('listaVeiculosCadastrados').innerHTML=html||'<p class="opacity-50 py-2">Nenhum veículo ainda</p>';}
 function buscarPorPlaca(placa){if(placa.length<3)return;const p=placa.toUpperCase().trim();const achadoV=veiculos.find(c=>c.placa.toUpperCase()===p);if(achadoV){document.getElementById('cliNome').value=achadoV.nome;document.getElementById('cliZap').value=achadoV.zap||'';document.getElementById('cliCpf').value=achadoV.cpf||'';document.getElementById('cliCarro').value=achadoV.carro;document.getElementById('cliKm').value=achadoV.km||'';return;}const achadoC=clientes.find(c=>c.placa.toUpperCase()===p);if(achadoC){document.getElementById('cliNome').value=achadoC.nome;document.getElementById('cliZap').value=achadoC.zap;document.getElementById('cliCpf').value=achadoC.cpf||'';document.getElementById('cliCarro').value=achadoC.carro;document.getElementById('cliKm').value=achadoC.km||'';}}
 function addItem(){const n=document.getElementById('itemNome').value.trim();const t=document.getElementById('itemTipo').value;const q=parseFloat(document.getElementById('itemQtd').value)||1;const v=parseFloat(document.getElementById('itemValor').value)||0;if(!n||!v){alert('Digite peça e valor');return;}itens.push({n,tipo:t,q,v});localStorage.setItem('itensOrc',JSON.stringify(itens));document.getElementById('itemNome').value='';document.getElementById('itemValor').value='';document.getElementById('itemQtd').value='1';renderItens();calc();}
 function renderItens(){if(!itens.length){document.getElementById('listaItens').innerHTML='<p class="text-[11px] opacity-40 text-center py-3">Nenhuma peça - opcional</p>';return;}let h='';itens.forEach((it,i)=>{const cor=it.tipo.includes('ORIGINAL')?'bg-black text-white':'bg-[#FF5A00] text-white';h+=`<div class="flex justify-between items-center bg-white border-2 rounded-[10px] p-2.5 text-[11px]"><div class="flex-1"><b>${it.q}x</b> ${it.n} <span class="${cor} rounded-full px-2 py-[1px] text-[8px] font-black ml-1">${it.tipo}</span><br><span class="font-black text-[#FF5A00]">R$ ${(it.q*it.v).toFixed(2)}</span></div><div class="flex gap-1"><button onclick="editarItem(${i})" class="bg-gray-100 border-2 rounded-[8px] px-2 py-1 font-black text-[9px]">EDITAR</button><button onclick="removerItem(${i})" class="bg-red-50 text-red-600 border rounded-[8px] px-2 py-1 font-black text-[9px]">X</button></div></div>`;});document.getElementById('listaItens').innerHTML=h;}
 function removerItem(i){itens.splice(i,1);localStorage.setItem('itensOrc',JSON.stringify(itens));renderItens();calc();}
 function editarItem(i){const it=itens[i];const nn=prompt('Nome peça:',it.n);if(!nn)return;const nv=prompt('Valor unitário:',it.v);if(!nv)return;const nq=prompt('Qtd:',it.q);itens[i].n=nn;itens[i].v=parseFloat(nv);itens[i].q=parseFloat(nq)||1;localStorage.setItem('itensOrc',JSON.stringify(itens));renderItens();calc();}
 function calc(){let pecas=itens.reduce((s,it)=>s+it.q*it.v,0);let mao=parseFloat(document.getElementById('maoObra').value)||0;let d=parseFloat(document.getElementById('desconto').value)||0;let td=document.getElementById('tipoDesc').value;let descReal=td==='%'?(pecas+mao)*(d/100):d;let total=pecas+mao-descReal;if(total<0)total=0;document.getElementById('totalValor').innerText='R$ '+total.toFixed(2);return total;}
-function gerarPDF(){const nome=document.getElementById('cliNome').value||'Cliente';const carro=document.getElementById('cliCarro').value||'-';const placa=document.getElementById('cliPlaca').value||'-';const statusO=document.getElementById('statusOficina').value;const total=calc();const {jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFillColor(255,90,0);doc.rect(0,0,210,30,'F');doc.setTextColor(255,255,255);doc.setFontSize(16);doc.setFont('helvetica','bold');doc.text('PRATES AUTO CENTER',14,18);doc.setFontSize(9);doc.text(`PLACA ${placa.toUpperCase()} | ${statusO} | ORIGINAL E PARALELA 1ª LINHA`,14,24);doc.setTextColor(0,0,0);doc.setFontSize(11);doc.text(`ORÇAMENTO - ${nome} - ${carro} ${placa.toUpperCase()} - ${statusO}`,14,40);let y=50;if(itens.length){itens.forEach(it=>{doc.setFontSize(10);doc.text(`${it.q}x ${it.n} (${it.tipo}) - R$ ${(it.q*it.v).toFixed(2)}`,14,y);y+=6;});}else{doc.setFontSize(10);doc.text(`Veículo cadastrado no painel - ${carro} - ${placa}`,14,y);y+=6;}doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text(`TOTAL: R$ ${total.toFixed(2)} | Garantia 90 dias | Validade 3 dias`,14,y+8);doc.save(`Orc-${placa}-${statusO}.pdf`);}
+function gerarPDF(){const nome=document.getElementById('cliNome').value||'Cliente';const carro=document.getElementById('cliCarro').value||'-';const placa=document.getElementById('cliPlaca').value||'-';const statusO=document.getElementById('statusOficina').value;const total=calc();const {jsPDF}=window.jspdf;const doc=new jsPDF();doc.setFillColor(255,90,0);doc.rect(0,0,210,30,'F');doc.setTextColor(255,255,255);doc.setFontSize(16);doc.setFont('helvetica','bold');doc.text('PRATES AUTO CENTER',14,18);doc.setFontSize(9);doc.text(`PLACA ${placa.toUpperCase()} | ${statusO} | ORIGINAL E PARALELA 1ª LINHA`,14,24);doc.setTextColor(0,0,0);doc.setFontSize(11);doc.text(`ORÇAMENTO - ${nome} - ${carro} ${placa.toUpperCase()} - ${statusO}`,14,40);let y=50;if(itens.length){itens.forEach(it=>{doc.setFontSize(10);doc.text(`${it.q}x ${it.n} (${it.tipo}) - R$ ${(it.q*it.v).toFixed(2)}`,14,y);y+=6;});}else{doc.setFontSize(10);doc.text(`Veículo cadastrado - ${carro} - ${placa}`,14,y);y+=6;}doc.setFontSize(12);doc.setFont('helvetica','bold');doc.text(`TOTAL: R$ ${total.toFixed(2)} | Garantia 90 dias | Validade 3 dias`,14,y+8);doc.save(`Orc-${placa}-${statusO}.pdf`);}
 function enviarZap(){const nome=document.getElementById('cliNome').value||'Cliente';const placa=document.getElementById('cliPlaca').value||'';let msg=`*ORÇAMENTO PRATES - ${nome} - ${placa.toUpperCase()}*%0A`;if(itens.length){itens.forEach(it=>{msg+=`• ${it.q}x ${it.n} (${it.tipo}) - R$ ${(it.q*it.v).toFixed(2)}%0A`;});}msg+=`*TOTAL R$ ${calc().toFixed(2)}*%0A_${document.getElementById('statusOficina').value}_`;window.open(`https://wa.me/5573998460804?text=${msg}`,'_blank');}
-function salvar(){const nome=document.getElementById('cliNome').value.trim();const placa=document.getElementById('cliPlaca').value.trim().toUpperCase();const carro=document.getElementById('cliCarro').value.trim();if(!nome){alert('Nome obrigatório');return;}if(!placa){alert('PLACA obrigatória');return;}if(!carro){alert('Carro obrigatório');return;}const total=calc();const dados={id:Date.now(),nome,zap:document.getElementById('cliZap').value.trim(),cpf:document.getElementById('cliCpf').value.trim(),carro,placa,km:document.getElementById('cliKm').value.trim(),serv:document.getElementById('cliServico').value||'Cadastro rápido - sem serviço',tecnico:document.getElementById('cliTecnico').value.trim(),itens:[...itens],mao:document.getElementById('maoObra').value||0,desc:document.getElementById('desconto').value||0,tipoDesc:document.getElementById('tipoDesc').value,formaPag:document.getElementById('formaPag').value,statusPag:document.getElementById('statusPag').value,status:document.getElementById('statusOficina').value,etiqueta:document.getElementById('etiqueta').value,total,data:new Date().toLocaleDateString('pt-BR'),hora:new Date().toLocaleTimeString('pt-BR').slice(0,5)};clientes.unshift(dados);localStorage.setItem('clientesPrates',JSON.stringify(clientes));let jaExiste=veiculos.find(v=>v.placa.toUpperCase()===placa);if(!jaExiste){veiculos.unshift({id:Date.now()+1,nome,cpf:dados.cpf,zap:dados.zap,carro,placa,ano:document.getElementById('vAno')?.value||'',cor:document.getElementById('vCor')?.value||'',km:dados.km,obs:document.getElementById('vObs')?.value||'',statusOficina:dados.status,data:dados.data});localStorage.setItem('veiculosPrates',[STRIPPED] Cliente '+nome+' - Placa '+placa+' salvo no painel!');}
-function render(){const busca=document.getElementById('busca').value.toLowerCase();const fS=document.getElementById('filtroStatus').value;const fE=document.getElementById('filtroEtiqueta').value;let grupos={};clientes.forEach(c=>{const key=c.placa.toUpperCase();if(!grupos[key])grupos[key]={nome:c.nome,placa:c.placa,carro:c.carro,zap:c.zap,cpf:c.cpf,totalGasto:0,qtd:0,ultima:c.data,etiqueta:c.etiqueta,historico:[],veiculoInfo:veiculos.find(v=>v.placa.toUpperCase()===key)};grupos[key].totalGasto+=c.total;grupos[key].qtd++;grupos[key].historico.push(c);if(c.etiqueta)grupos[key].etiqueta=c.etiqueta;if(c.nome)grupos[key].nome=c.nome;if(c.carro)grupos[key].carro=c.carro;});veiculos.forEach(v=>{const key=v.placa.toUpperCase();if(!grupos[key]){grupos[key]={nome:v.nome,placa:v.placa,carro:v.carro,zap:v.zap,cpf:v.cpf,totalGasto:0,qtd:0,ultima:v.data,etiqueta:'',historico:[],veiculoInfo:v};}else{if(!grupos[key].veiculoInfo)grupos[key].veiculoInfo=v;}});let lista=Object.values(grupos).filter(g=>{const vInfo=g.veiculoInfo?`${g.veiculoInfo.ano||''} ${g.veiculoInfo.cor||''} ${g.veiculoInfo.obs||''} ${g.veiculoInfo.statusOficina||''}`:'';const txt=`${g.nome} ${g.placa} ${g.carro} ${g.zap} ${vInfo} ${g.cpf}`.toLowerCase();return txt.includes(busca)&&(!fS||g.historico.some(h=>h.status===fS)||g.veiculoInfo?.statusOficina===fS)&&(!fE||g.etiqueta===fE);});document.getElementById('resumo').innerText=`${lista.length} placas | R$ ${lista.reduce((s,g)=>s+g.totalGasto,0).toFixed(2)}`;let html='';lista.forEach(g=>{const statusCor=g.historico[0]?.status || g.veiculoInfo?.statusOficina || 'VEÍCULO CADASTRADO';let badge='bg-gray-100 border-gray-200';let borda='border-gray-200';if(statusCor==='AGUARDANDO PEÇA'){badge='bg-red-100 text-red-700 border-red-300';borda='border-red-400';}if(statusCor==='EM MANUTENÇÃO'){badge='bg-yellow-100 text-yellow-800 border-yellow-300';borda='border-yellow-400';}if(statusCor.includes('PRONTO')){badge='bg-blue-100 text-blue-700 border-blue-300';borda='border-blue-400';}if(statusCor==='ENTREGUE'){badge='bg-green-100 text-green-700 border-green-300';borda='border-green-400';}const vInfo=g.veiculoInfo?`<br><span class="text-[10px] bg-gray-100 rounded-full px-2 py-0.5 border">${g.veiculoInfo.ano||''} ${g.veiculoInfo.cor||''} ${g.veiculoInfo.km?g.veiculoInfo.km+' KM':''} ${g.veiculoInfo.obs||''}</span>`:'';
-html+=`<div class="border-2 rounded-[16px] p-3 bg-white ${borda}"><div class="flex justify-between"><div><p class="font-black text-[13px]">🚗 ${g.placa} - ${g.carro} <span class="text-[8px] font-black px-2 py-0.5 rounded-full border-2 ${badge}">${statusCor}</span></p><p class="text-[11px] opacity-70">👤 ${g.nome} ${g.cpf?'| CPF '+g.cpf:''} | 📱 ${g.zap} ${g.etiqueta?`| ${g.etiqueta}`:''}</p><p class="text-[10px]">${vInfo}</p></div><div class="text-right"><p class="font-black text-[#FF5A00] text-[13px]">R$ ${g.totalGasto.toFixed(2)}</p><p class="text-[10px] font-bold">${g.qtd} serviços</p><p class="text-[9px] opacity-60">${g.ultima||''}</p></div></div>
-<div class="mt-2.5 grid grid-cols-4 gap-1.5">
-<button onclick="mudarStatusRapido('${g.placa}','AGUARDANDO PEÇA')" class="bg-red-500 hover:bg-red-600 text-white rounded-[10px] py-2.5 font-black text-[9px]">🔴 AG. PEÇA</button>
-<button onclick="mudarStatusRapido('${g.placa}','EM MANUTENÇÃO')" class="bg-yellow-400 hover:bg-yellow-500 text-black rounded-[10px] py-2.5 font-black text-[9px]">🟡 MANUT.</button>
-<button onclick="mudarStatusRapido('${g.placa}','PRONTO - AGUARDANDO RETIRADA')" class="bg-blue-500 hover:bg-blue-600 text-white rounded-[10px] py-2.5 font-black text-[9px]">🔵 PRONTO</button>
-<button onclick="mudarStatusRapido('${g.placa}','ENTREGUE')" class="bg-green-500 hover:bg-green-600 text-white rounded-[10px] py-2.5 font-black text-[9px]">✅ ENTREGUE</button>
-</div>
-<div class="mt-2 space-y-1 max-h-[90px] overflow-auto bg-gray-50 rounded-[10px] p-2 border text-[10px]">${g.historico.length?g.historico.map(h=>`<div class="flex justify-between border-b py-1"><span>${h.data} ${h.hora} - ${h.serv} - R$ ${h.total.toFixed(2)}</span><span class="font-black ${h.status==='AGUARDANDO PEÇA'?'text-red-600':h.status==='EM MANUTENÇÃO'?'text-yellow-600':h.status.includes('PRONTO')?'text-blue-600':'text-green-600'}">${h.status}</span></div>`).join(''):'<p class="opacity-60">Veículo cadastrado - sem serviços ainda. Use os botões acima para marcar PEÇA / MANUT. / PRONTO</p>'}</div>
-<div class="grid grid-cols-3 gap-1 mt-2"><button onclick="novoServico('${g.placa}')" class="bg-black text-white rounded-[8px] py-2 font-black text-[9px]">+ NOVO SERVIÇO MESMA PLACA</button><button onclick="zapGrupo('${g.zap}')" class="bg-[#25D366] text-white rounded-[8px] py-2 font-black text-[9px]">ZAP</button><button onclick="verFicha('${g.placa}')" class="bg-white border-2 rounded-[8px] py-2 font-black text-[9px]">FICHA COMPLETA</button></div></div>`;});document.getElementById('listaClientes').innerHTML=html||'<p class="text-center opacity-40 py-10">Nenhum veículo cadastrado<br>Cadastre Nome + Placa + Carro e clique SALVAR</p>';}
+function salvar(){
+ const nome=document.getElementById('cliNome').value.trim();
+ const placa=document.getElementById('cliPlaca').value.trim().toUpperCase();
+ const carro=document.getElementById('cliCarro').value.trim();
+ if(!nome){alert('Nome obrigatório');return;}
+ if(!placa){alert('PLACA obrigatória');return;}
+ if(!carro){alert('Carro obrigatório');return;}
+ const total=calc();
+ const dados={id:Date.now(),nome,zap:document.getElementById('cliZap').value.trim(),cpf:document.getElementById('cliCpf').value.trim(),carro,placa,km:document.getElementById('cliKm').value.trim(),serv:document.getElementById('cliServico').value||'Cadastro rápido - sem serviço',tecnico:document.getElementById('cliTecnico').value.trim(),itens:[...itens],mao:document.getElementById('maoObra').value||0,desc:document.getElementById('desconto').value||0,tipoDesc:document.getElementById('tipoDesc').value,formaPag:document.getElementById('formaPag').value,statusPag:document.getElementById('statusPag').value,status:document.getElementById('statusOficina').value,etiqueta:document.getElementById('etiqueta').value,total,data:new Date().toLocaleDateString('pt-BR'),hora:new Date().toLocaleTimeString('pt-BR').slice(0,5)};
+ clientes.unshift(dados);
+ localStorage.setItem('clientesPrates',JSON.stringify(clientes));
+ let jaExiste=veiculos.find(v=>v.placa.toUpperCase()===placa);
+ if(!jaExiste){
+  veiculos.unshift({id:Date.now()+1,nome,cpf:dados.cpf,zap:dados.zap,carro,placa,ano:document.getElementById('vAno')?.value||'',cor:document.getElementById('vCor')?.value||'',km:dados.km,obs:document.getElementById('vObs')?.value||'',statusOficina:dados.status,data:dados.data});
+ }else{jaExiste.statusOficina=dados.status;jaExiste.nome=nome;jaExiste.carro=carro;jaExiste.zap=dados.zap;}
+ localStorage.setItem('veiculosPrates',JSON.stringify(veiculos));
+ itens=[];localStorage.setItem('itensOrc',JSON.stringify(itens));
+ renderItens();calc();render();atualizarFinanceiro();
+ alert('✅ Cliente '+nome+' - Placa '+placa+' salvo no painel!');
+}
+function render(){
+ const busca=document.getElementById('busca').value.toLowerCase();const fS=document.getElementById('filtroStatus').value;const fE=document.getElementById('filtroEtiqueta').value;
+ let grupos={};
+ clientes.forEach(c=>{const key=c.placa.toUpperCase();if(!grupos[key])grupos[key]={nome:c.nome,placa:c.placa,carro:c.carro,zap:c.zap,cpf:c.cpf,totalGasto:0,qtd:0,ultima:c.data,etiqueta:c.etiqueta,historico:[],veiculoInfo:veiculos.find(v=>v.placa.toUpperCase()===key)};grupos[key].totalGasto+=c.total;grupos[key].qtd++;grupos[key].historico.push(c);if(c.etiqueta)grupos[key].etiqueta=c.etiqueta;if(c.nome)grupos[key].nome=c.nome;if(c.carro)grupos[key].carro=c.carro;});
+ veiculos.forEach(v=>{const key=v.placa.toUpperCase();if(!grupos[key]){grupos[key]={nome:v.nome,placa:v.placa,carro:v.carro,zap:v.zap,cpf:v.cpf,totalGasto:0,qtd:0,ultima:v.data,etiqueta:'',historico:[],veiculoInfo:v};}else{if(!grupos[key].veiculoInfo)grupos[key].veiculoInfo=v;}});
+ let lista=Object.values(grupos).filter(g=>{const vInfo=g.veiculoInfo?`${g.veiculoInfo.ano||''} ${g.veiculoInfo.cor||''} ${g.veiculoInfo.obs||''} ${g.veiculoInfo.statusOficina||''}`:'';const txt=`${g.nome} ${g.placa} ${g.carro} ${g.zap} ${vInfo} ${g.cpf}`.toLowerCase();return txt.includes(busca)&&(!fS||g.historico.some(h=>h.status===fS)||g.veiculoInfo?.statusOficina===fS)&&(!fE||g.etiqueta===fE);});
+ document.getElementById('resumo').innerText=`${lista.length} placas | R$ ${lista.reduce((s,g)=>s+g.totalGasto,0).toFixed(2)}`;
+ let html='';
+ lista.forEach(g=>{
+  const statusCor=g.historico[0]?.status || g.veiculoInfo?.statusOficina || 'VEÍCULO CADASTRADO';
+  let badge='bg-gray-100 border-gray-200';let borda='border-gray-200';
+  if(statusCor==='AGUARDANDO PEÇA'){badge='bg-red-100 text-red-700 border-red-300';borda='border-red-400';}
+  if(statusCor==='EM MANUTENÇÃO'){badge='bg-yellow-100 text-yellow-800 border-yellow-300';borda='border-yellow-400';}
+  if(statusCor.includes('PRONTO')){badge='bg-blue-100 text-blue-700 border-blue-300';borda='border-blue-400';}
+  if(statusCor==='ENTREGUE'){badge='bg-green-100 text-green-700 border-green-300';borda='border-green-400';}
+  const vInfo=g.veiculoInfo?`<br><span class="text-[10px] bg-gray-100 rounded-full px-2 py-0.5 border">${g.veiculoInfo.ano||''} ${g.veiculoInfo.cor||''} ${g.veiculoInfo.km?g.veiculoInfo.km+' KM':''} ${g.veiculoInfo.obs||''}</span>`:'';
+  html+=`<div class="border-2 rounded-[16px] p-3 bg-white ${borda}"><div class="flex justify-between"><div><p class="font-black text-[13px]">🚗 ${g.placa} - ${g.carro} <span class="text-[8px] font-black px-2 py-0.5 rounded-full border-2 ${badge}">${statusCor}</span></p><p class="text-[11px] opacity-70">👤 ${g.nome} ${g.cpf?'| CPF '+g.cpf:''} | 📱 ${g.zap} ${g.etiqueta?`| ${g.etiqueta}`:''}</p><p class="text-[10px]">${vInfo}</p></div><div class="text-right"><p class="font-black text-[#FF5A00] text-[13px]">R$ ${g.totalGasto.toFixed(2)}</p><p class="text-[10px] font-bold">${g.qtd} serviços</p><p class="text-[9px] opacity-60">${g.ultima||''}</p></div></div>
+  <div class="mt-2.5 grid grid-cols-4 gap-1.5">
+  <button onclick="mudarStatusRapido('${g.placa}','AGUARDANDO PEÇA')" class="bg-red-500 hover:bg-red-600 text-white rounded-[10px] py-2.5 font-black text-[9px]">🔴 AG. PEÇA</button>
+  <button onclick="mudarStatusRapido('${g.placa}','EM MANUTENÇÃO')" class="bg-yellow-400 hover:bg-yellow-500 text-black rounded-[10px] py-2.5 font-black text-[9px]">🟡 MANUT.</button>
+  <button onclick="mudarStatusRapido('${g.placa}','PRONTO - AGUARDANDO RETIRADA')" class="bg-blue-500 hover:bg-blue-600 text-white rounded-[10px] py-2.5 font-black text-[9px]">🔵 PRONTO</button>
+  <button onclick="mudarStatusRapido('${g.placa}','ENTREGUE')" class="bg-green-500 hover:bg-green-600 text-white rounded-[10px] py-2.5 font-black text-[9px]">✅ ENTREGUE</button>
+  </div>
+  <div class="mt-2 space-y-1 max-h-[90px] overflow-auto bg-gray-50 rounded-[10px] p-2 border text-[10px]">${g.historico.length?g.historico.map(h=>`<div class="flex justify-between border-b py-1"><span>${h.data} ${h.hora} - ${h.serv} - R$ ${h.total.toFixed(2)}</span><span class="font-black ${h.status==='AGUARDANDO PEÇA'?'text-red-600':h.status==='EM MANUTENÇÃO'?'text-yellow-600':h.status.includes('PRONTO')?'text-blue-600':'text-green-600'}">${h.status}</span></div>`).join(''):'<p class="opacity-60">Veículo cadastrado - sem serviços ainda. Use os botões acima para marcar PEÇA / MANUT. / PRONTO</p>'}</div>
+  <div class="grid grid-cols-3 gap-1 mt-2"><button onclick="novoServico('${g.placa}')" class="bg-black text-white rounded-[8px] py-2 font-black text-[9px]">+ NOVO SERVIÇO MESMA PLACA</button><button onclick="zapGrupo('${g.zap}')" class="bg-[#25D366] text-white rounded-[8px] py-2 font-black text-[9px]">ZAP</button><button onclick="verFicha('${g.placa}')" class="bg-white border-2 rounded-[8px] py-2 font-black text-[9px]">FICHA COMPLETA</button></div></div>`;
+ });
+ document.getElementById('listaClientes').innerHTML=html||'<p class="text-center opacity-40 py-10">Nenhum veículo cadastrado<br>Cadastre Nome + Placa + Carro e clique SALVAR</p>';
+}
 function mudarStatusRapido(placa,novoStatus){let placaUp=placa.toUpperCase();let lista=clientes.filter(c=>c.placa.toUpperCase()===placaUp).sort((a,b)=>b.id-a.id);let veic=veiculos.find(v=>v.placa.toUpperCase()===placaUp);if(lista.length){lista[0].status=novoStatus;localStorage.setItem('clientesPrates',JSON.stringify(clientes));}if(veic){veic.statusOficina=novoStatus;localStorage.setItem('veiculosPrates',JSON.stringify(veiculos));}render();atualizarFinanceiro();}
 function novoServico(placa){const v=veiculos.find(x=>x.placa===placa)||clientes.find(x=>x.placa===placa);if(v){document.getElementById('cliNome').value=v.nome;document.getElementById('cliZap').value=v.zap;document.getElementById('cliCpf').value=v.cpf||'';document.getElementById('cliCarro').value=v.carro;document.getElementById('cliPlaca').value=v.placa;document.getElementById('cliKm').value=v.km||'';window.scrollTo(0,0);}}
 function verFicha(placa){const g=clientes.filter(x=>x.placa===placa);const v=veiculos.filter(x=>x.placa===placa);let txt=`FICHA COMPLETA - PLACA ${placa}\nVeículo: ${v[0]?.carro||g[0]?.carro||''} ${v[0]?.ano||''} ${v[0]?.cor||''} ${v[0]?.km||''} KM\nCliente: ${g[0]?.nome||v[0]?.nome||''}\nCPF: ${g[0]?.cpf||v[0]?.cpf||''}\nTotal gasto: R$ ${g.reduce((s,c)=>s+c.total,0).toFixed(2)}\nQtd serviços: ${g.length}\n\nHistórico:\n`;g.forEach(h=>{txt+=`${h.data} ${h.hora} - ${h.serv} - ${h.status} - R$ ${h.total.toFixed(2)}\n`;});if(!g.length && v.length){txt+=`Veículo cadastrado em ${v[0].data} - Status: ${v[0].statusOficina||'VEÍCULO CADASTRADO'}\n`;}alert(txt);}
