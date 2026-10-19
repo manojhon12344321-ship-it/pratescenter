@@ -2,49 +2,46 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADM - Prates Auto Center</title>
+<title>ADM Oculto - Prates</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body class="bg-[#f5f5f5] p-3">
-<div class="max-w-[700px] mx-auto bg-white rounded-[20px] p-6 shadow-xl">
-<h1 class="font-black text-[#FF6B00] text-[22px]">PRATES AUTO CENTER - ADM</h1>
-<p class="text-[11px] text-gray-400 mb-4">Preencha e salve - cliente vê pelo WhatsApp</p>
+<div class="max-w-[720px] mx-auto bg-white rounded-[22px] p-7 shadow-xl border border-gray-100">
+<div class="flex justify-between items-center mb-4"><h1 class="font-black text-[#FF6B00] text-[20px]">PRATES ADM OCULTO</h1><a href="index.html" class="text-[10px] bg-black text-white px-3 py-1.5 rounded-full">VOLTAR AO SITE</a></div>
+<p class="text-[11px] text-gray-400 mb-5">Sistema completo - Peça com MARCA + Mão de obra + Prazo + Garantia separados</p>
 
-<label class="text-[12px] font-bold">Cliente</label>
-<input id="cliente" class="w-full border rounded-xl p-3 mt-1 text-sm" placeholder="Ex: João Silva">
-
-<div class="grid grid-cols-2 gap-3 mt-3">
-<div><label class="text-[12px] font-bold">WhatsApp Cliente (só números)</label><input id="whatsCliente" class="w-full border rounded-xl p-3 mt-1 text-sm" placeholder="73998460804"></div>
-<div><label class="text-[12px] font-bold">Veículo / Placa</label><input id="veiculo" class="w-full border rounded-xl p-3 mt-1 text-sm" placeholder="Hilux 2020 - ABC1234"></div>
+<div class="grid grid-cols-1 gap-3">
+<label class="text-[11px] font-black tracking-wider">CLIENTE</label><input id="cliente" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-3.5 text-sm outline-none" placeholder="Ex: João Silva">
+<div class="grid grid-cols-2 gap-3">
+<div><label class="text-[11px] font-black">WHATSAPP CLIENTE (só números)</label><input id="whatsCliente" type="tel" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm font-bold" placeholder="73998460804"></div>
+<div><label class="text-[11px] font-black">VEÍCULO / PLACA</label><input id="veiculo" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm" placeholder="Hilux 2020 - ABC1234"></div>
+</div>
+<label class="text-[11px] font-black tracking-wider mt-2">DIAGNÓSTICO REALIZADO</label>
+<textarea id="diagnostico" rows="3" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm outline-none" placeholder="Após inspeção completa, constatado desgaste..."></textarea>
 </div>
 
-<label class="text-[12px] font-bold mt-4 block">Diagnóstico Realizado</label>
-<textarea id="diagnostico" rows="3" class="w-full border rounded-xl p-3 mt-1 text-sm" placeholder="Após inspeção completa, constatado..."></textarea>
+<p class="font-black mt-7 text-[12px] tracking-wider border-l-4 border-[#FF6B00] pl-3">📦 PEÇAS (COM MARCA SEPARADA)</p>
+<div id="listaPecas" class="mt-3"></div>
+<button onclick="addPeca()" class="w-full mt-3 bg-black text-white rounded-[14px] py-3.5 text-[12px] font-black tracking-wider">+ ADICIONAR PEÇA COM MARCA</button>
 
-<p class="font-black mt-5 text-sm border-l-4 border-[#FF6B00] pl-3">PEÇAS (COM MARCA)</p>
-<div id="listaPecas" class="mt-2"></div>
-<button onclick="addPeca()" class="w-full mt-3 bg-black text-white rounded-xl py-3 text-sm font-bold">+ Adicionar Peça</button>
-
-<div class="grid grid-cols-2 gap-3 mt-5">
-<div><label class="text-[12px] font-black text-[#FF6B00]">MÃO DE OBRA (SEPARADO)</label><input id="maoObra" type="number" value="80" oninput="calcular()" class="w-full border-2 border-orange-200 rounded-xl p-3 mt-1 text-sm font-bold"></div>
-<div><label class="text-[12px] font-black">PRAZO (SEPARADO)</label><input id="prazo" value="2 horas" class="w-full border rounded-xl p-3 mt-1 text-sm"></div>
+<div class="grid grid-cols-3 gap-3 mt-7">
+<div><label class="text-[10px] font-black tracking-wider text-[#FF6B00]">MÃO DE OBRA (SEPARADO) R$</label><input id="maoObra" type="number" value="80" oninput="calcular()" class="w-full border-2 border-orange-200 bg-orange-50 rounded-[14px] p-3.5 mt-1 text-sm font-black"></div>
+<div><label class="text-[10px] font-black tracking-wider">PRAZO (SEPARADO)</label><input id="prazo" value="2 horas" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm font-bold"></div>
+<div><label class="text-[10px] font-black tracking-wider">GARANTIA (SEPARADO)</label><input id="garantia" value="90 dias" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm font-bold"></div>
 </div>
-<label class="text-[12px] font-black mt-3 block">GARANTIA (SEPARADO)</label>
-<input id="garantia" value="90 dias" class="w-full border rounded-xl p-3 mt-1 text-sm">
 
-<div id="totalBox" class="mt-5 bg-black text-[#FF6B00] p-4 rounded-xl text-center font-black text-xl">TOTAL GERAL: R$ 0,00</div>
+<div id="totalBox" class="mt-6 bg-black text-[#FF6B00] p-5 rounded-[16px] text-center font-black text-[20px] tracking-wider">TOTAL GERAL: R$ 0,00</div>
 
-<button onclick="salvarNoFirebase()" class="w-full mt-4 bg-[#FF6B00] text-white rounded-xl py-4 font-black">💾 SALVAR NO SITE + GERAR PDF</button>
-<button onclick="enviarWhats()" class="w-full mt-3 bg-[#25D366] text-white rounded-xl py-4 font-black">💬 ENVIAR NO WHATSAPP DO CLIENTE</button>
-<p id="status" class="text-center font-bold mt-3 text-sm"></p>
+<button onclick="salvarNoFirebase()" class="w-full mt-5 bg-[#FF6B00] hover:bg-orange-600 text-white rounded-[14px] py-4 font-black text-[13px] tracking-wider shadow-[0_8px_20px_rgba(255,107,0,0.3)]">💾 SALVAR NO SITE + GERAR PDF AUTOMÁTICO</button>
+<button onclick="enviarWhats()" class="w-full mt-3 bg-[#25D366] text-white rounded-[14px] py-4 font-black text-[13px]">💬 ENVIAR DIRETO NO WHATSAPP DO CLIENTE</button>
+<p id="status" class="text-center font-black mt-4 text-[12px]"></p>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyDklYzIeYg6-PNwd7lGufPLyXVQaSalZlA",
   authDomain: "pratescenter.firebaseapp.com",
@@ -63,12 +60,12 @@ window.addPeca=(nome='',marca='',qtd=1,valor=0)=>{
 window.render=()=>{
   const div=document.getElementById('listaPecas'); div.innerHTML='';
   pecas.forEach((p,i)=>{
-    div.innerHTML+=`<div class="grid grid-cols-[1.5fr_1fr_45px_85px_35px] gap-1 mt-2">
-      <input value="${p.peca}" oninput="pecas[${i}].peca=this.value" placeholder="Peça" class="border rounded-lg p-2 text-[12px]">
-      <input value="${p.marca}" oninput="pecas[${i}].marca=this.value" placeholder="Marca ex: Bosch" class="border rounded-lg p-2 text-[12px] font-bold">
-      <input type="number" value="${p.qtd}" oninput="pecas[${i}].qtd=parseInt(this.value)||1;calcular()" class="border rounded-lg p-2 text-[12px]">
-      <input type="number" value="${p.valor}" oninput="pecas[${i}].valor=parseFloat(this.value)||0;calcular()" class="border rounded-lg p-2 text-[12px]">
-      <button onclick="pecas.splice(${i},1);render();calcular()" class="bg-red-500 text-white rounded-lg">X</button>
+    div.innerHTML+=`<div class="grid grid-cols-[1.6fr_1fr_50px_90px_36px] gap-1.5 mt-2">
+      <input value="${p.peca}" oninput="pecas[${i}].peca=this.value" placeholder="Nome da peça" class="border-2 border-gray-100 rounded-xl p-2.5 text-[12px]">
+      <input value="${p.marca}" oninput="pecas[${i}].marca=this.value" placeholder="Marca ex: Bosch" class="border-2 border-orange-100 bg-orange-50 rounded-xl p-2.5 text-[12px] font-black">
+      <input type="number" value="${p.qtd}" oninput="pecas[${i}].qtd=parseInt(this.value)||1;calcular()" class="border-2 border-gray-100 rounded-xl p-2.5 text-[12px] text-center font-bold">
+      <input type="number" value="${p.valor}" oninput="pecas[${i}].valor=parseFloat(this.value)||0;calcular()" class="border-2 border-gray-100 rounded-xl p-2.5 text-[12px] font-bold">
+      <button onclick="pecas.splice(${i},1);render();calcular()" class="bg-red-500 hover:bg-red-600 text-white rounded-xl font-black">X</button>
     </div>`;
   }); calcular();
 }
@@ -80,7 +77,7 @@ window.calcular=()=>{
 window.salvarNoFirebase=async()=>{
   const cliente=document.getElementById('cliente').value.trim();
   const whats=document.getElementById('whatsCliente').value.replace(/\D/g,'');
-  if(!cliente||!whats){alert("Preencha Cliente e WhatsApp");return;}
+  if(!cliente||!whats){alert("Preencha Cliente e WhatsApp com DDD");return;}
   const dados={
     cliente, whats, veiculo:document.getElementById('veiculo').value,
     diagnostico:document.getElementById('diagnostico').value,
@@ -92,28 +89,28 @@ window.salvarNoFirebase=async()=>{
     total:pecas.reduce((s,p)=>s+(p.valor*p.qtd),0)+(parseFloat(document.getElementById('maoObra').value)||0),
     data:new Date().toLocaleString('pt-BR'), timestamp:Date.now()
   };
-  document.getElementById('status').innerText="Salvando no Firebase...";
+  document.getElementById('status').innerText="⏳ Salvando no Firebase...";
   try{
     await addDoc(collection(db,"orcamentos"),dados);
-    document.getElementById('status').innerText="✅ SALVO! Cliente já pode buscar pelo WhatsApp no site";
+    document.getElementById('status').innerText="✅ SALVO! Cliente já pode buscar pelo WhatsApp no site oculto";
     gerarPDF(dados);
   }catch(e){document.getElementById('status').innerText="❌ Erro: "+e.message}
 }
 window.gerarPDF=(d)=>{
   const {jsPDF}=window.jspdf; const doc=new jsPDF();
-  doc.setFillColor(255,107,0); doc.rect(0,0,210,22,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(255,255,255); doc.text('PRATES AUTO CENTER',14,14);
+  doc.setFillColor(255,107,0); doc.rect(0,0,210,22,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(255,255,255); doc.text('PRATES AUTO CENTER - ADM OCULTO',14,14);
   doc.setTextColor(0,0,0); doc.setFontSize(10); doc.text(`Cliente: ${d.cliente} | Whats: ${d.whats} | Veiculo: ${d.veiculo}`,14,30); doc.text(`Diagnostico: ${d.diagnostico}`,14,36);
   let body=d.pecas.map(p=>[p.peca,p.marca,p.qtd,`R$ ${p.valor}`,`R$ ${(p.valor*p.qtd).toFixed(2)}`]);
   doc.autoTable({startY:42, head:[['ITEM','MARCA','QTD','UNIT','TOTAL']], body:body, headStyles:{fillColor:[255,107,0]}});
-  let y=doc.lastAutoTable.finalY+6; doc.setFillColor(245,245,245); doc.rect(14,y,182,10,'F'); doc.text(`MAO DE OBRA: R$ ${d.maoObra} | PRAZO: ${d.prazo} | GARANTIA: ${d.garantia}`,16,y+7);
-  y+=16; doc.setFillColor(255,107,0); doc.rect(14,y,182,12,'F'); doc.setTextColor(255,255,255); doc.setFontSize(13); doc.text(`TOTAL GERAL: R$ ${d.total.toFixed(2)}`,16,y+8);
+  let y=doc.lastAutoTable.finalY+6; doc.setFillColor(245,245,245); doc.rect(14,y,182,12,'F'); doc.setTextColor(0,0,0); doc.text(`MAO DE OBRA: R$ ${d.maoObra} | PRAZO: ${d.prazo} | GARANTIA: ${d.garantia}`,16,y+8);
+  y+=16; doc.setFillColor(0,0,0); doc.rect(14,y,182,14,'F'); doc.setTextColor(255,107,0); doc.setFontSize(14); doc.text(`TOTAL GERAL: R$ ${d.total.toFixed(2)}`,16,y+10);
   doc.save(`ORC_${d.cliente.replace(/\s/g,'_')}.pdf`);
 }
 window.enviarWhats=()=>{
   const whats=document.getElementById('whatsCliente').value.replace(/\D/g,'');
   const cliente=document.getElementById('cliente').value;
   const total=document.getElementById('totalBox').innerText;
-  window.open(`https://wa.me/55${whats}?text=Olá ${cliente}! Seu orçamento ${total} da Prates Auto Center está pronto. Consulte no site com seu WhatsApp.`, '_blank');
+  window.open(`https://wa.me/55${whats}?text=Olá ${cliente}! ✅ Seu orçamento ${total} da Prates Auto Center está pronto! Consulte no site: https://manojhon12344321-ship-it.github.io/ digitando seu WhatsApp.`, '_blank');
 }
 addPeca('Pastilha Freio Dianteira','Cobreq',1,180);
 addPeca('Disco Freio Dianteiro','Fremax',1,320);
