@@ -2,45 +2,124 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prates Auto Center - Meu Orçamento</title>
+<title>Prates Auto Center - Oficina em Teixeira de Freitas</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-[#f6f6f6] font-sans">
-<header class="bg-black border-b-[5px] border-[#FF6B00] p-4 sticky top-0 z-40">
-<div class="max-w-4xl mx-auto flex justify-between items-center">
-<h1 id="logoSecret" class="text-white font-black text-[14px] tracking-wider cursor-pointer select-none">PRATES AUTO CENTER</h1>
-<span class="text-[8px] text-white/20">TOQUE 5X NO LOGO</span>
-</div>
+<body class="bg-[#f6f7f8]">
+<header class="bg-black border-b-[5px] border-[#FF6B00] px-5 py-4 flex justify-between items-center sticky top-0 z-40">
+<h1 id="logoSecret" class="text-white font-black text-[15px] tracking-[1px]">PRATES AUTO CENTER</h1>
+<span class="text-[8px] text-white/20 tracking-widest">TOQUE 5X NO LOGO</span>
 </header>
 
-<div class="max-w-4xl mx-auto p-4">
-<div class="bg-white rounded-[22px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.06)] mt-4 border border-gray-100">
-<div class="flex items-center gap-3"><div class="w-10 h-10 bg-black rounded-full flex items-center justify-center">🔍</div><div><h2 class="font-black text-[15px]">Consultar meu orçamento</h2><p class="text-[11px] text-gray-500">Digite seu WhatsApp com DDD - só números</p></div></div>
+<div class="max-w-[480px] mx-auto p-4 pb-20">
+<!-- HERO APRESENTAVEL -->
+<div class="bg-gradient-to-br from-black to-zinc-800 rounded-[28px] p-7 mt-2 text-white relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-[#FF6B00]/20 rounded-full blur-[30px]"></div>
+<p class="text-[#FF6B00] font-black text-[10px] tracking-[3px]">OFICINA MECÂNICA • DESDE 2010</p>
+<h2 class="font-black text-[26px] leading-[28px] mt-3">Seu carro em<br>mãos de <span class="text-[#FF6B00]">especialista</span></h2>
+<p class="text-[12px] text-white/60 mt-3 leading-5">Diagnóstico real, peças com marca informada, mão de obra separada e garantia por escrito.</p>
+<div class="grid grid-cols-3 gap-2 mt-6">
+<div class="bg-white/10 rounded-[14px] p-3 text-center backdrop-blur"><p class="text-[18px]">🔧</p><p class="text-[9px] font-bold mt-1">MECÂNICA</p></div>
+<div class="bg-white/10 rounded-[14px] p-3 text-center backdrop-blur"><p class="text-[18px]">⚙️</p><p class="text-[9px] font-bold mt-1">INJEÇÃO</p></div>
+<div class="bg-white/10 rounded-[14px] p-3 text-center backdrop-blur"><p class="text-[18px]">🛞</p><p class="text-[9px] font-bold mt-1">FREIOS</p></div>
+</div>
+</div>
+
+<!-- ABAS -->
+<div class="flex gap-2 mt-5 bg-white p-1.5 rounded-[16px] border border-gray-100">
+<button id="aba1" onclick="mostraAba(1)" class="flex-1 bg-black text-white rounded-[12px] py-3 font-black text-[11px]">📝 SOLICITAR ORÇAMENTO</button>
+<button id="aba2" onclick="mostraAba(2)" class="flex-1 text-gray-400 rounded-[12px] py-3 font-black text-[11px]">🔍 CONSULTAR O MEU</button>
+</div>
+
+<!-- ABA 1: CLIENTE MANDA PROBLEMA -->
+<div id="painel1" class="bg-white rounded-[24px] p-6 mt-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100">
+<h3 class="font-black text-[15px]">O que seu carro está apresentando?</h3>
+<p class="text-[11px] text-gray-500 mt-1">Preencha e envia direto no WhatsApp da oficina. Chega tudo organizadinho pra gente.</p>
+
+<div class="space-y-3 mt-5">
+<input id="cNome" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] font-bold outline-none" placeholder="Seu nome completo">
+<input id="cWhats" type="tel" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] font-bold outline-none" placeholder="Seu WhatsApp com DDD (ex: 739...)">
+<input id="cCarro" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] outline-none" placeholder="Seu carro - Ex: Hilux 2020 - ABC1234">
+
+<label class="text-[10px] font-black tracking-wider">TIPO DE PROBLEMA</label>
+<select id="cTipo" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] font-bold outline-none bg-white">
+<option value="Barulho estranho">🔊 Barulho estranho</option>
+<option value="Freio">🛞 Freio</option>
+<option value="Suspensão">🔩 Suspensão</option>
+<option value="Motor falhando">⚙️ Motor falhando / Injeção</option>
+<option value="Elétrica">💡 Elétrica / Luz no painel</option>
+<option value="Vazamento">💧 Vazamento de óleo / água</option>
+<option value="Revisão">✅ Revisão preventiva</option>
+<option value="Outro">❓ Outro problema</option>
+</select>
+
+<textarea id="cDesc" rows="4" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] outline-none" placeholder="Descreva com detalhes: Quando começou? Faz barulho quando freia? Pisca alguma luz? Quanto mais detalhes, melhor o diagnóstico..."></textarea>
+
+<button onclick="enviarSolicitacao()" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-[14px] py-4 font-black text-[14px] shadow-[0_10px_20px_rgba(37,211,102,0.3)]">💬 ENVIAR PARA O WHATSAPP DA OFICINA</button>
+<p class="text-center text-[10px] text-gray-400 mt-2">Você será redirecionado para o WhatsApp da Prates com a mensagem pronta e bonita</p>
+</div>
+</div>
+
+<!-- ABA 2: CONSULTAR ORÇAMENTO JA FEITO -->
+<div id="painel2" class="hidden bg-white rounded-[24px] p-6 mt-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100">
+<div class="flex gap-3 items-center"><div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white">🔍</div><div><h3 class="font-black text-[14px]">Consultar meu orçamento pronto</h3><p class="text-[11px] text-gray-500">Digite seu WhatsApp com DDD</p></div></div>
 <div class="flex gap-2 mt-5">
-<input id="buscaWhats" type="tel" class="flex-1 border-2 border-gray-200 focus:border-[#FF6B00] rounded-[14px] px-4 py-3.5 text-[15px] font-bold outline-none" placeholder="73998460804">
-<button onclick="buscarFirebase()" class="bg-black hover:bg-zinc-800 text-white px-7 py-3.5 rounded-[14px] font-black text-[13px]">BUSCAR</button>
+<input id="buscaWhats" type="tel" class="flex-1 border-2 border-gray-200 focus:border-[#FF6B00] rounded-[14px] px-4 py-4 text-[14px] font-bold outline-none" placeholder="73998460804">
+<button onclick="buscarFirebase()" class="bg-black text-white px-7 py-4 rounded-[14px] font-black text-[12px]">BUSCAR</button>
 </div>
 </div>
 
-<div id="resultado" class="hidden mt-5 bg-white rounded-[22px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100"><div id="conteudoResult"></div></div>
+<div id="resultado" class="hidden mt-5"></div>
 
-<div class="mt-8 bg-white rounded-[20px] p-5 border border-gray-100">
-<p class="font-black text-[12px] text-center">📍 SERVIÇOS PRATES AUTO CENTER</p>
-<div class="grid grid-cols-2 gap-2 mt-3 text-[11px] text-center"><div class="bg-gray-50 p-3 rounded-xl">🔧 Mecânica Geral</div><div class="bg-gray-50 p-3 rounded-xl">⚙️ Injeção Eletrônica</div><div class="bg-gray-50 p-3 rounded-xl">🛞 Freios e Suspensão</div><div class="bg-gray-50 p-3 rounded-xl">💡 Elétrica</div></div>
+<div class="text-center mt-8 text-[11px] text-gray-400">📍 Teixeira de Freitas - BA<br>Whats Oficina: (73) 99846-0804<br>Prates Auto Center</div>
 </div>
 
-<div class="text-center mt-8 text-[11px] text-gray-400 pb-10">📍 Teixeira de Freitas - BA<br>Whats: (73) 99846-0804 | Prates Auto Center</div>
+<!-- MODAL ADM OCULTO -->
+<div id="modalAdm" class="hidden fixed inset-0 bg-black/85 z-[99] flex items-center justify-center p-6">
+<div class="bg-white rounded-[24px] p-7 w-full max-w-[340px]">
+<p class="font-black text-center">ADM Oculto</p><input id="senhaAdm" type="password" class="w-full border-2 rounded-xl p-3 mt-4" placeholder="Senha prates2024">
+<button onclick="if(document.getElementById('senhaAdm').value==='prates2024')window.location.href='admin.html';else alert('Senha errada')" class="w-full bg-[#FF6B00] text-white rounded-xl py-3 font-black mt-3">ENTRAR</button>
+<button onclick="document.getElementById('modalAdm').classList.add('hidden')" class="w-full mt-2 text-xs text-gray-400">Cancelar</button>
+</div>
 </div>
 
-<div id="modalAdm" class="hidden fixed inset-0 bg-black/85 z-[99] flex items-center justify-center p-6 backdrop-blur-sm">
-<div class="bg-white rounded-[24px] p-7 w-full max-w-[340px] shadow-2xl">
-<div class="w-12 h-12 bg-[#FF6B00] rounded-full flex items-center justify-center mx-auto mb-3">🔒</div>
-<p class="font-black text-center text-[16px]">Acesso ADM Oculto</p><p class="text-[11px] text-gray-500 text-center mt-1">Área restrita do proprietário</p>
-<input id="senhaAdm" type="password" class="w-full border-2 border-gray-200 focus:border-[#FF6B00] rounded-[14px] p-3.5 mt-4 outline-none text-sm font-bold" placeholder="Digite a senha">
-<button onclick="verificaSenha()" class="w-full bg-[#FF6B00] text-white rounded-[14px] py-3.5 font-black mt-3">ENTRAR NO ADM</button>
-<button onclick="document.getElementById('modalAdm').classList.add('hidden')" class="w-full mt-3 text-[12px] text-gray-400">Cancelar</button>
-</div>
-</div>
+<script>
+let clicks=0;
+document.getElementById('logoSecret').addEventListener('click',()=>{clicks++;if(clicks>=5){document.getElementById('modalAdm').classList.remove('hidden');clicks=0;} setTimeout(()=>clicks=0,2500);});
+if(window.location.search.includes('pratesadm')) document.getElementById('modalAdm').classList.remove('hidden');
+
+function mostraAba(n){
+  document.getElementById('painel1').classList.toggle('hidden', n!==1);
+  document.getElementById('painel2').classList.toggle('hidden', n!==2);
+  document.getElementById('aba1').className = n===1 ? "flex-1 bg-black text-white rounded-[12px] py-3 font-black text-[11px]" : "flex-1 text-gray-400 rounded-[12px] py-3 font-black text-[11px]";
+  document.getElementById('aba2').className = n===2 ? "flex-1 bg-black text-white rounded-[12px] py-3 font-black text-[11px]" : "flex-1 text-gray-400 rounded-[12px] py-3 font-black text-[11px]";
+  document.getElementById('resultado').classList.add('hidden');
+}
+
+function enviarSolicitacao(){
+  const nome=document.getElementById('cNome').value.trim();
+  const whats=document.getElementById('cWhats').value.trim();
+  const carro=document.getElementById('cCarro').value.trim();
+  const tipo=document.getElementById('cTipo').value;
+  const desc=document.getElementById('cDesc').value.trim();
+  if(!nome||!whats||!carro||!desc){alert("Preencha tudo por favor!");return;}
+  
+  const msg=`*🔧 NOVA SOLICITAÇÃO - PRATES AUTO CENTER*
+
+*👤 CLIENTE:* ${nome}
+*📱 WHATS:* ${whats}
+*🚗 VEÍCULO:* ${carro}
+*⚠️ TIPO:* ${tipo}
+
+*📝 DESCRIÇÃO DO PROBLEMA:*
+${desc}
+
+_Enviado pelo site: manojhon12344321-ship-it.github.io/pratescenter_
+*Horário:* ${new Date().toLocaleString('pt-BR')}`;
+
+  window.open(`https://wa.me/5573998460804?text=${encodeURIComponent(msg)}`,'_blank');
+}
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
@@ -53,41 +132,37 @@ const firebaseConfig = {
   messagingSenderId: "168571076583",
   appId: "1:168571076583:web:a8fd30ec2bffa4ca4e8742"
 };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let clicks=0;
-document.getElementById('logoSecret').addEventListener('click',()=>{clicks++;if(clicks>=5){document.getElementById('modalAdm').classList.remove('hidden');clicks=0;} setTimeout(()=>clicks=0,2500);});
-if(window.location.search.includes('pratesadm')){document.getElementById('modalAdm').classList.remove('hidden');}
-window.verificaSenha=()=>{if(document.getElementById('senhaAdm').value==='prates2024'){window.location.href='admin.html';}else{alert('Senha errada! A senha é prates2024');}}
+const db = getFirestore(initializeApp(firebaseConfig));
 
 window.buscarFirebase=async()=>{
   let whats=document.getElementById('buscaWhats').value.replace(/\D/g,'');
   if(!whats){alert("Digite seu WhatsApp");return;}
-  document.getElementById('resultado').classList.remove('hidden');
-  document.getElementById('conteudoResult').innerHTML="<div class='p-10 text-center'><div class='animate-pulse font-black'>🔍 Buscando...</div><p class='text-[11px] text-gray-400 mt-2'>Consultando Firebase</p></div>";
+  const resDiv=document.getElementById('resultado');
+  resDiv.classList.remove('hidden');
+  resDiv.innerHTML="<div class='bg-white rounded-[24px] p-10 text-center font-black animate-pulse'>🔍 Buscando...</div>";
   try{
     const q=query(collection(db,"orcamentos"), where("whats","==",whats), orderBy("timestamp","desc"), limit(1));
     const snap=await getDocs(q);
-    if(snap.empty){document.getElementById('conteudoResult').innerHTML="<div class='p-10 text-center'><p class='text-3xl'>😕</p><p class='font-black mt-2'>Nenhum orçamento encontrado</p><p class='text-[12px] text-gray-500 mt-2'>Verifique o número digitado: "+whats+"<br>Ou fale com a oficina no WhatsApp</p><a href='https://wa.me/5573998460804' class='inline-block mt-4 bg-black text-white px-5 py-2 rounded-full text-[12px] font-bold'>Falar no WhatsApp</a></div>";return;}
+    if(snap.empty){resDiv.innerHTML=`<div class='bg-white rounded-[24px] p-8 text-center'><p class='font-black'>Nenhum orçamento para ${whats}</p></div>`;return;}
     const o=snap.docs[0].data();
-    let pecasHtml=o.pecas.map(p=>`<div class="grid grid-cols-[2fr_1fr_30px_65px_65px] p-3.5 text-[11px] border-b border-gray-100 items-center"><span class="font-medium">${p.peca}</span><span class="font-black text-[#FF6B00] bg-orange-50 px-2 py-1 rounded-full text-[10px] text-center">${p.marca}</span><span class="text-center">${p.qtd}x</span><span class="text-center text-gray-500">R$ ${p.valor}</span><span class="font-black text-right">R$ ${(p.valor*p.qtd).toFixed(2)}</span></div>`).join('');
-    document.getElementById('conteudoResult').innerHTML=`
-      <div class="bg-gradient-to-r from-[#FF6B00] to-[#FF8533] p-6 text-white flex justify-between items-center"><div><p class="text-[9px] tracking-[2px] opacity-80">ORÇAMENTO OFICIAL</p><p class="font-black text-[18px] mt-1">${o.cliente}</p><p class="text-[12px] opacity-90 mt-1">🚗 ${o.veiculo} • 📱 ${o.whats}</p></div><div class="text-right bg-white/20 rounded-xl p-3"><p class="text-[8px] opacity-80">DATA</p><p class="font-bold text-[11px]">${o.data}</p></div></div>
-      <div class="p-6">
-        <div class="mb-6"><p class="font-black text-[11px] tracking-wider border-l-4 border-[#FF6B00] pl-3 mb-3">🔍 DIAGNÓSTICO REALIZADO</p><p class="bg-[#fafafa] border border-gray-100 p-4 rounded-[14px] text-[13px] leading-[1.5]">${o.diagnostico}</p></div>
-        <div class="mb-6"><p class="font-black text-[11px] tracking-wider border-l-4 border-[#FF6B00] pl-3 mb-3">📦 ITENS E PEÇAS (COM MARCA SEPARADA)</p><div class="border-2 border-gray-100 rounded-[14px] overflow-hidden"><div class="grid grid-cols-[2fr_1fr_30px_65px_65px] bg-black text-white text-[8px] font-black tracking-wider p-3.5"><span>ITEM</span><span>MARCA</span><span>QTD</span><span>UNIT</span><span class="text-right">TOTAL</span></div>${pecasHtml}</div></div>
-        <div class="grid grid-cols-3 gap-3 mb-6">
-          <div class="border-2 border-orange-200 bg-orange-50 rounded-[14px] p-4 text-center"><p class="text-[8px] font-black tracking-wider text-orange-400">MÃO DE OBRA</p><p class="font-black text-[15px] mt-2 text-black">R$ ${o.maoObra}</p><p class="text-[8px] text-gray-400 mt-1">SEPARADO</p></div>
-          <div class="border-2 border-gray-100 bg-white rounded-[14px] p-4 text-center"><p class="text-[8px] font-black tracking-wider text-gray-400">PRAZO</p><p class="font-black text-[14px] mt-2">${o.prazo}</p><p class="text-[8px] text-gray-400 mt-1">SEPARADO</p></div>
-          <div class="border-2 border-gray-100 bg-white rounded-[14px] p-4 text-center"><p class="text-[8px] font-black tracking-wider text-gray-400">GARANTIA</p><p class="font-black text-[14px] mt-2">${o.garantia}</p><p class="text-[8px] text-gray-400 mt-1">SEPARADO</p></div>
+    let pecasHtml=o.pecas.map(p=>`<div class="flex justify-between py-3 border-b border-gray-100"><div><p class="font-bold text-[13px]">${p.peca}</p><p class="text-[10px] mt-1"><span class="bg-orange-50 text-[#FF6B00] font-black px-2 py-1 rounded-full">MARCA: ${p.marca}</span> ${p.qtd}x R$ ${p.valor}</p></div><p class="font-black text-[13px]">R$ ${(p.valor*p.qtd).toFixed(2)}</p></div>`).join('');
+    resDiv.innerHTML=`
+      <div class="bg-white rounded-[24px] overflow-hidden shadow-xl">
+        <div class="bg-gradient-to-r from-[#FF6B00] to-[#FF8A33] p-6 text-white"><p class="text-[9px] font-black tracking-[2px]">ORÇAMENTO OFICIAL</p><h2 class="font-black text-[20px] mt-1">${o.cliente}</h2><p class="text-[12px] mt-1">🚗 ${o.veiculo} • 📅 ${o.data}</p></div>
+        <div class="p-6">
+          <p class="font-black text-[11px] border-l-4 border-[#FF6B00] pl-2">DIAGNÓSTICO REALIZADO</p><div class="bg-gray-50 border rounded-[14px] p-4 mt-3 text-[13px]">${o.diagnostico}</div>
+          <p class="font-black text-[11px] border-l-4 border-[#FF6B00] pl-2 mt-6">ITENS E PEÇAS - MARCA SEPARADA</p><div class="mt-3 border-2 rounded-[14px] p-3">${pecasHtml}</div>
+          <div class="grid grid-cols-3 gap-2 mt-6">
+            <div class="bg-orange-50 border-2 border-orange-200 rounded-[14px] p-3 text-center"><p class="text-[8px] font-black text-orange-400">MÃO DE OBRA</p><p class="font-black text-[14px] mt-1">R$ ${o.maoObra}</p></div>
+            <div class="border-2 rounded-[14px] p-3 text-center"><p class="text-[8px] font-black text-gray-400">PRAZO</p><p class="font-black text-[13px] mt-1">${o.prazo}</p></div>
+            <div class="border-2 rounded-[14px] p-3 text-center"><p class="text-[8px] font-black text-gray-400">GARANTIA</p><p class="font-black text-[13px] mt-1">${o.garantia}</p></div>
+          </div>
+          <div class="bg-black rounded-[16px] p-5 text-center mt-6"><p class="text-white/50 text-[9px] tracking-[2px] font-black">TOTAL GERAL</p><p class="text-[#FF6B00] font-black text-[30px]">R$ ${Number(o.total).toFixed(2)}</p></div>
+          <a href="https://wa.me/5573998460804?text=Olá Prates! Sou ${o.cliente} e quero APROVAR meu orçamento de R$ ${o.total}" target="_blank" class="block w-full mt-4 bg-[#25D366] text-white font-black py-4 rounded-[16px] text-center">✅ APROVAR NO WHATSAPP</a>
         </div>
-        <div class="bg-black rounded-[16px] p-5 text-center"><p class="text-white/60 text-[9px] tracking-[2px]">TOTAL GERAL DO ORÇAMENTO</p><p class="text-[#FF6B00] font-black text-[28px] mt-1">R$ ${Number(o.total).toFixed(2)}</p></div>
-        <a href="https://wa.me/5573998460804?text=Olá Prates! Sou ${o.cliente} - ${o.veiculo} e quero APROVAR meu orçamento de R$ ${o.total}. Meu Whats: ${o.whats}" target="_blank" class="block w-full mt-4 bg-[#25D366] hover:bg-[#20bd5a] text-white font-black py-4 rounded-[14px] text-center text-[14px] shadow-[0_8px_20px_rgba(37,211,102,0.3)]">✅ APROVAR ORÇAMENTO NO WHATSAPP</a>
-        <p class="text-center text-[10px] text-gray-300 mt-4">Prates Auto Center • Orçamento com peças de marca, mão de obra, prazo e garantia separados</p>
       </div>`;
-    document.getElementById('resultado').scrollIntoView({behavior:'smooth'});
-  }catch(e){document.getElementById('conteudoResult').innerHTML=`<p class='p-8 text-red-500 text-center text-[12px]'>Erro Firebase: ${e.message}<br>Se pedir índice, clica no link do erro para criar.</p>`;}
+    resDiv.scrollIntoView({behavior:'smooth'});
+  }catch(e){resDiv.innerHTML=`<p class='bg-white p-6 rounded-xl text-center text-red-500 text-xs'>Erro: ${e.message}</p>`;}
 }
 </script>
 </body>
