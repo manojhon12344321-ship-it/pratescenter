@@ -1,72 +1,368 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADM Prates</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<style>.tab-active{background:black;color:white}.tab{background:white;color:black;border:1px solid #ddd}</style>
-</head><body class="bg-black text-white">
-<div id="loginAdmin" style="position:fixed;inset:0;background:black;z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px">
-<div style="background:white;color:black;border-radius:20px;padding:24px;width:100%;max-width:340px;text-align:center">
-<h3 style="font-weight:900">PRATES ADMIN</h3>
-<input id="senhaAdmin" type="password" placeholder="Senha" style="width:100%;border:2px solid #ccc;border-radius:12px;padding:12px;margin-top:16px;text-align:center;font-weight:900">
-<button onclick="login()" style="width:100%;background:#FF5A00;color:white;border-radius:12px;padding:12px;font-weight:900;margin-top:12px">ENTRAR</button>
-<p id="erroLogin" style="display:none;color:red;font-size:11px;margin-top:8px;font-weight:bold">Senha errada!</p>
-<p style="font-size:9px;opacity:.5;margin-top:8px">Senha: prates304050</p>
-</div></div>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ADM Prates - Completo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+.tab-active{background:black;color:white;border:1px solid black}
+.tab{background:white;color:black;border:1px solid #e5e5e5}
+</style>
+</head>
+<body class="bg-[#0f0f0f] text-white">
 
-<div style="max-width:1300px;margin:0 auto;padding:12px">
-<div style="display:flex;gap:8px;overflow:auto;padding-bottom:8px">
-<button id="t1" onclick="aba(1)" class="tab-active" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900;white-space:nowrap">DASHBOARD</button>
-<button id="t2" onclick="aba(2)" class="tab" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900">CLIENTES</button>
-<button id="t3" onclick="aba(3)" class="tab" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900">HISTÓRICO PLACA</button>
-<button id="t4" onclick="aba(4)" class="tab" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900">GARANTIAS</button>
-<button id="t5" onclick="aba(5)" class="tab" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900">AGENDA</button>
-<button id="t6" onclick="aba(6)" class="tab" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900">LEMBRETES</button>
-<button id="t7" onclick="aba(7)" class="tab" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900">FINANCEIRO</button>
-<button id="t8" onclick="aba(8)" style="border-radius:20px;padding:10px 16px;font-size:10px;font-weight:900;background:#FF5A00;color:white">+ ORÇAMENTO</button>
+<div id="loginAdmin" class="fixed inset-0 bg-black z-[99999] flex items-center justify-center p-6">
+<div class="bg-white text-black rounded-[20px] p-6 w-full max-w-[340px] text-center">
+<h3 class="font-black text-[18px]">PRATES ADMIN</h3>
+<p class="text-[10px] opacity-60 mt-1">Digite a senha para acessar</p>
+<input id="senhaAdmin" type="password" placeholder="Senha" class="w-full border-2 rounded-[12px] p-3 mt-4 text-center font-black outline-none focus:border-[#FF5A00]">
+<button onclick="login()" class="w-full bg-[#FF5A00] text-white rounded-[12px] py-3 font-black mt-3">ENTRAR</button>
+<p id="erroLogin" class="hidden text-[11px] text-red-500 mt-2 font-bold">Senha incorreta!</p>
+<p class="text-[9px] opacity-40 mt-3">Senha: prates304050</p>
+</div>
 </div>
 
-<div id="aba1" style="background:white;color:black;border-radius:20px;padding:16px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div style="background:black;color:white;border-radius:14px;padding:12px"><p style="font-size:8px">CLIENTES</p><p id="dashTotal" style="font-size:20px;font-weight:900">0</p></div><div style="background:#FF5A00;color:white;border-radius:14px;padding:12px"><p style="font-size:8px">ANDAMENTO</p><p id="dashAnd" style="font-size:20px;font-weight:900">0</p></div><div style="background:#facc15;color:black;border-radius:14px;padding:12px"><p style="font-size:8px">GARANTIA VENCENDO</p><p id="dashGar" style="font-size:20px;font-weight:900">0</p></div><div style="background:#22c55e;color:white;border-radius:14px;padding:12px"><p style="font-size:8px">HOJE</p><p id="dashHoje" style="font-weight:900">R$ 0</p></div></div><input oninput="filtrarDash(this.value)" placeholder="Buscar nome, placa..." style="width:100%;border:1px solid #ccc;border-radius:10px;padding:12px;margin-top:16px;font-size:12px"><div id="listaDash" style="margin-top:12px"></div></div>
+<div class="max-w-[1200px] mx-auto p-3">
+<div class="flex gap-2 mb-3 overflow-auto pb-2">
+<button id="t1" onclick="aba(1)" class="tab-active rounded-full px-5 py-2.5 text-[11px] font-black whitespace-nowrap">DASHBOARD</button>
+<button id="t2" onclick="aba(2)" class="tab rounded-full px-5 py-2.5 text-[11px] font-black">CLIENTES</button>
+<button id="t3" onclick="aba(3)" class="tab rounded-full px-5 py-2.5 text-[11px] font-black">HISTÓRICO PLACA</button>
+<button id="t4" onclick="aba(4)" class="tab rounded-full px-5 py-2.5 text-[11px] font-black">GARANTIAS</button>
+<button id="t5" onclick="aba(5)" class="tab rounded-full px-5 py-2.5 text-[11px] font-black">AGENDA / FILA</button>
+<button id="t6" onclick="aba(6)" class="tab rounded-full px-5 py-2.5 text-[11px] font-black">LEMBRETES</button>
+<button id="t7" onclick="aba(7)" class="tab rounded-full px-5 py-2.5 text-[11px] font-black">FINANCEIRO</button>
+<button id="t8" onclick="aba(8)" class="rounded-full px-5 py-2.5 text-[11px] font-black bg-[#FF5A00] text-white">+ ORÇAMENTO</button>
+</div>
 
-<div id="aba2" style="display:none;background:white;color:black;border-radius:20px;padding:16px"><h3 style="font-weight:900;font-size:13px">Clientes Salvos</h3><div id="listaClientes" style="margin-top:12px"></div></div>
+<div id="aba1" class="bg-white text-black rounded-[20px] p-5">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+<div class="bg-black text-white rounded-[16px] p-4"><p class="text-[10px] opacity-60">TOTAL CLIENTES</p><p id="dashTotal" class="text-[24px] font-black">0</p></div>
+<div class="bg-[#FF5A00] text-white rounded-[16px] p-4"><p class="text-[10px]">EM ANDAMENTO</p><p id="dashAnd" class="text-[24px] font-black">0</p></div>
+<div class="bg-yellow-400 text-black rounded-[16px] p-4"><p class="text-[10px] font-black">GARANTIA VENCENDO</p><p id="dashGar" class="text-[24px] font-black">0</p></div>
+<div class="bg-green-500 text-white rounded-[16px] p-4"><p class="text-[10px]">HOJE FATURADO</p><p id="dashHoje" class="text-[20px] font-black">R$ 0</p></div>
+</div>
+<div class="mt-4"><input id="inputDash" oninput="filtrarDash(this.value)" placeholder="Buscar cliente, placa..." class="w-full border rounded-[12px] p-3 text-[13px]"><div id="listaDash" class="mt-3 space-y-2 max-h-[400px] overflow-auto"></div></div>
+</div>
 
-<div id="aba3" style="display:none;background:white;color:black;border-radius:20px;padding:16px"><h3 style="font-weight:900;font-size:13px">Histórico por Placa</h3><div style="display:flex;gap:8px;margin-top:12px"><input id="buscaPlaca" placeholder="PLACA EX: ABC1234" style="flex:1;border:2px solid orange;border-radius:10px;padding:12px;font-weight:900;text-transform:uppercase"><button onclick="buscarPlaca()" style="background:black;color:white;border-radius:10px;padding:0 20px;font-weight:900">BUSCAR</button></div><div id="historicoPlaca" style="margin-top:12px"></div></div>
+<div id="aba2" class="hidden bg-white text-black rounded-[20px] p-5"><h3 class="font-black text-[14px]">Clientes Salvos</h3><div id="listaClientes" class="mt-4 space-y-2"></div></div>
 
-<div id="aba4" style="display:none;background:white;color:black;border-radius:20px;padding:16px"><h3 style="font-weight:900">Garantias</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px"><div><p style="font-size:10px;font-weight:900;color:red">VENCENDO EM 7 DIAS</p><div id="garVencendo" style="margin-top:8px"></div></div><div><p style="font-size:10px;font-weight:900;color:orange">ATIVAS</p><div id="garAtiva" style="margin-top:8px"></div></div></div></div>
+<div id="aba3" class="hidden bg-white text-black rounded-[20px] p-5"><h3 class="font-black text-[14px]">Histórico por Placa - Função 1</h3><div class="flex gap-2 mt-4"><input id="buscaPlaca" placeholder="Digite a placa ex: ABC1234" class="flex-1 border-2 border-orange-200 rounded-[12px] p-3 text-[12px] font-black uppercase"><button onclick="buscarPlaca()" class="bg-black text-white rounded-[12px] px-6 font-black text-[11px]">BUSCAR</button></div><div id="historicoPlaca" class="mt-4 space-y-2"></div></div>
 
-<div id="aba5" style="display:none;background:white;color:black;border-radius:20px;padding:16px"><h3 style="font-weight:900">Agenda / Fila</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><input id="agData" type="date" style="border:1px solid #ccc;border-radius:8px;padding:8px"><input id="agHora" type="time" style="border:1px solid #ccc;border-radius:8px;padding:8px"><input id="agNome" placeholder="Cliente" style="border:1px solid #ccc;border-radius:8px;padding:8px"><input id="agPlaca" placeholder="Placa" style="border:1px solid #ccc;border-radius:8px;padding:8px"><input id="agServ" placeholder="Serviço" style="border:1px solid #ccc;border-radius:8px;padding:8px"><select id="agStatus" style="border:1px solid #ccc;border-radius:8px;padding:8px"><option>Agendado</option><option>Na Rampa</option><option>Esperando Peça</option><option>Pronto</option></select></div><button onclick="addAgenda()" style="width:100%;background:black;color:white;border-radius:10px;padding:12px;font-weight:900;margin-top:8px">+ AGENDAR</button><div id="listaAgenda" style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px"></div></div>
+<div id="aba4" class="hidden bg-white text-black rounded-[20px] p-5"><h3 class="font-black text-[14px]">Garantias - Função 2</h3><div class="grid md:grid-cols-2 gap-4 mt-4"><div><p class="text-[10px] font-black text-red-500">VENCENDO EM 7 DIAS</p><div id="garVencendo" class="mt-2 space-y-2"></div></div><div><p class="text-[10px] font-black text-green-600">GARANTIAS ATIVAS</p><div id="garAtiva" class="mt-2 space-y-2"></div></div></div></div>
 
-<div id="aba6" style="display:none;background:white;color:black;border-radius:20px;padding:16px"><h3 style="font-weight:900">Lembretes +5 meses</h3><div id="listaLembretes" style="margin-top:12px"></div></div>
+<div id="aba5" class="hidden bg-white text-black rounded-[20px] p-5"><h3 class="font-black text-[14px]">Agenda / Fila - Função 3</h3><div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-4"><input id="agData" type="date" class="border rounded-[10px] p-2.5 text-[11px]"><input id="agHora" type="time" class="border rounded-[10px] p-2.5 text-[11px]"><select id="agStatus" class="border rounded-[10px] p-2.5 text-[11px] font-bold"><option>Agendado</option><option>Na Rampa</option><option>Esperando Peça</option><option>Pronto</option></select><input id="agNome" placeholder="Cliente" class="border rounded-[10px] p-2.5 text-[11px]"><input id="agPlaca" placeholder="Placa" class="border rounded-[10px] p-2.5 text-[11px] uppercase"><input id="agServ" placeholder="Serviço" class="border rounded-[10px] p-2.5 text-[11px]"></div><button onclick="addAgenda()" class="w-full bg-black text-white rounded-[12px] py-3 font-black text-[11px] mt-3">+ AGENDAR</button><div id="listaAgenda" class="mt-4 grid md:grid-cols-3 gap-3"></div></div>
 
-<div id="aba7" style="display:none;background:white;color:black;border-radius:20px;padding:16px"><h3 style="font-weight:900">Financeiro</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><div style="background:black;color:white;border-radius:12px;padding:12px"><p style="font-size:8px">HOJE</p><p id="finHoje" style="font-weight:900">R$0</p></div><div style="background:#FF5A00;color:white;border-radius:12px;padding:12px"><p style="font-size:8px">MÊS</p><p id="finMes" style="font-weight:900">R$0</p></div><div style="background:#f3f3f3;border-radius:12px;padding:12px"><p style="font-size:8px">MÃO DE OBRA MÊS</p><p id="finMao" style="font-weight:900">R$0</p></div><div style="background:#f3f3f3;border-radius:12px;padding:12px"><p style="font-size:8px">PEÇAS MÊS</p><p id="finPecas" style="font-weight:900">R$0</p></div></div><div style="margin-top:16px"><p style="font-size:11px;font-weight:900">Marca mais vendida</p><div id="finMarcas" style="margin-top:8px"></div></div></div>
+<div id="aba6" class="hidden bg-white text-black rounded-[20px] p-5"><h3 class="font-black text-[14px]">Lembretes - Função 4</h3><p class="text-[11px] opacity-60 mt-1">Clientes com mais de 150 dias sem voltar</p><div id="listaLembretes" class="mt-4 space-y-2"></div></div>
 
-<div id="aba8" style="display:none"><div style="display:grid;grid-template-columns:1fr;gap:12px"><div style="background:white;color:black;border-radius:20px;padding:16px"><p style="font-weight:900;font-size:11px">Cliente e Veículo</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"><input id="nome" placeholder="Nome *" style="border:1px solid #ccc;border-radius:10px;padding:12px;font-size:12px;font-weight:bold"><input id="zap" placeholder="Whats *" style="border:1px solid #ccc;border-radius:10px;padding:12px;font-size:12px"><input id="veiculo" placeholder="Veículo *" style="border:1px solid #ccc;border-radius:10px;padding:12px;font-size:12px"><input id="placa" placeholder="Placa *" style="border:1px solid #ccc;border-radius:10px;padding:12px;font-size:12px;text-transform:uppercase"><input id="km" placeholder="KM" style="border:1px solid #ccc;border-radius:10px;padding:12px;font-size:12px"><input id="servico" placeholder="Serviço" style="border:1px solid #ccc;border-radius:10px;padding:12px;font-size:12px"></div></div><div style="background:white;color:black;border-radius:20px;padding:16px"><div style="display:flex;justify-content:space-between"><p style="font-weight:900;font-size:11px">Peças com MARCA Separada</p><span id="contador" style="background:#ffedd5;color:#FF5A00;font-size:8px;font-weight:900;padding:2px 8px;border-radius:20px">0</span></div><div id="lista" style="margin-top:8px"></div><button onclick="addPeca()" style="width:100%;background:black;color:white;border-radius:10px;padding:12px;font-weight:900;font-size:10px;margin-top:8px">+ ADICIONAR PEÇA</button><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px"><div style="background:#fff7ed;border:1px solid orange;border-radius:10px;padding:8px"><label style="font-size:7px;font-weight:900;color:#FF5A00">MÃO DE OBRA</label><input id="mao" type="number" value="150" oninput="calc()" style="width:100%;background:transparent;font-weight:900;outline:none"></div><div style="background:#fff7ed;border:1px solid orange;border-radius:10px;padding:8px"><label style="font-size:7px;font-weight:900;color:#FF5A00">PRAZO</label><input id="prazo" value="2 horas" style="width:100%;background:transparent;font-weight:900;font-size:11px;outline:none"></div><div style="background:#fff7ed;border:1px solid orange;border-radius:10px;padding:8px"><label style="font-size:7px;font-weight:900;color:#FF5A00">GARANTIA</label><input id="garantia" value="90 dias" style="width:100%;background:transparent;font-weight:900;font-size:11px;outline:none"></div><div style="background:#fff7ed;border:1px solid orange;border-radius:10px;padding:8px"><label style="font-size:7px;font-weight:900;color:#FF5A00">PAGAMENTO</label><input id="pagamento" value="Pix / Cartão" style="width:100%;background:transparent;font-weight:900;font-size:11px;outline:none"></div><div style="background:#fff7ed;border:1px solid orange;border-radius:10px;padding:8px"><label style="font-size:7px;font-weight:900;color:#FF5A00">VALIDADE</label><input id="validade" value="7 dias" style="width:100%;background:transparent;font-weight:900;font-size:11px;outline:none"></div><div style="background:black;color:white;border-radius:10px;padding:8px"><p style="font-size:7px;opacity:.5">TOTAL</p><p id="total" style="font-weight:900;color:#FF5A00">R$ 0</p></div></div><select id="status" style="width:100%;border:1px solid #ccc;border-radius:10px;padding:8px;margin-top:8px;font-size:11px;font-weight:bold"><option value="andamento">Em Andamento</option><option value="finalizado">Finalizado</option></select></div><div style="background:white;color:black;border-radius:20px;padding:16px"><h3 style="font-weight:900;font-size:11px">Prévia</h3><div id="previa" style="background:#f3f3f3;border-radius:10px;padding:12px;font-size:11px;white-space:pre-wrap;margin-top:8px;min-height:100px"></div><button onclick="salvarCliente()" style="width:100%;background:black;color:white;border-radius:10px;padding:12px;font-weight:900;margin-top:8px;font-size:11px">SALVAR NO CONTROLE</button><button onclick="gerarPDF()" style="width:100%;background:#FF5A00;color:white;border-radius:10px;padding:12px;font-weight:900;margin-top:8px;font-size:11px">PDF PREMIUM COM MARCA</button><button onclick="enviarZap()" style="width:100%;background:#25D366;color:white;border-radius:10px;padding:12px;font-weight:900;margin-top:8px;font-size:11px">ENVIAR ZAP</button></div></div></div>
+<div id="aba7" class="hidden bg-white text-black rounded-[20px] p-5"><h3 class="font-black text-[14px]">Financeiro - Função 5</h3><div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4"><div class="bg-black text-white rounded-[16px] p-4"><p class="text-[8px] opacity-60">HOJE</p><p id="finHoje" class="font-black">R$ 0</p></div><div class="bg-[#FF5A00] text-white rounded-[16px] p-4"><p class="text-[8px]">MÊS TOTAL</p><p id="finMes" class="font-black">R$ 0</p></div><div class="bg-gray-100 rounded-[16px] p-4"><p class="text-[8px]">MÃO DE OBRA MÊS</p><p id="finMao" class="font-black">R$ 0</p></div><div class="bg-gray-100 rounded-[16px] p-4"><p class="text-[8px]">PEÇAS MÊS</p><p id="finPecas" class="font-black">R$ 0</p></div></div><div class="mt-6"><p class="text-[12px] font-black">Marca Mais Vendida</p><div id="finMarcas" class="mt-2"></div></div></div>
+
+<div id="aba8" class="hidden">
+<div class="grid md:grid-cols-[1fr_380px] gap-4">
+<div class="space-y-3">
+<div class="bg-white text-black rounded-[20px] p-5"><p class="font-black text-[12px]">1. Cliente e Veículo (vai para o cliente)</p><div class="grid grid-cols-2 gap-2 mt-3"><input id="nome" placeholder="Nome Cliente *" class="border rounded-[10px] p-3 text-[12px] font-bold"><input id="zap" placeholder="Whats *" class="border rounded-[10px] p-3 text-[12px]"><input id="veiculo" placeholder="Veículo *" class="border rounded-[10px] p-3 text-[12px]"><input id="placa" placeholder="Placa *" class="border rounded-[10px] p-3 text-[12px] uppercase"><input id="km" placeholder="KM" class="border rounded-[10px] p-3 text-[12px]"><input id="servico" placeholder="Serviço" class="border rounded-[10px] p-3 text-[12px]"></div></div>
+<div class="bg-white text-black rounded-[20px] p-5 space-y-3"><div class="flex justify-between"><p class="font-black text-[12px]">2. Peças com MARCA Separada (vai para o cliente)</p><span id="contador" class="bg-orange-100 text-[#FF5A00] text-[9px] font-black px-3 py-1 rounded-full">0 peças</span></div><div id="lista" class="space-y-3 max-h-[380px] overflow-auto"></div><button onclick="addPeca()" class="w-full bg-black text-white rounded-[12px] py-3 font-black text-[10px]">+ ADICIONAR PEÇA COM MARCA</button><div class="grid grid-cols-3 gap-2"><div class="bg-[#FFF0E6] border-2 border-orange-200 rounded-[12px] p-3"><label class="text-[7px] font-black text-[#FF5A00]">MÃO DE OBRA</label><input id="mao" type="number" value="150" oninput="calc()" class="w-full bg-transparent font-black outline-none"></div><div class="bg-[#FFF0E6] border-2 border-orange-200 rounded-[12px] p-3"><label class="text-[7px] font-black text-[#FF5A00]">PRAZO</label><input id="prazo" value="2 horas" class="w-full bg-transparent font-black text-[12px] outline-none"></div><div class="bg-[#FFF0E6] border-2 border-orange-200 rounded-[12px] p-3"><label class="text-[7px] font-black text-[#FF5A00]">GARANTIA</label><input id="garantia" value="90 dias" class="w-full bg-transparent font-black text-[11px] outline-none"></div><div class="bg-[#FFF0E6] border-2 border-orange-200 rounded-[12px] p-3"><label class="text-[7px] font-black text-[#FF5A00]">PAGAMENTO</label><input id="pagamento" value="Pix / Cartão / Dinheiro" class="w-full bg-transparent font-black text-[11px] outline-none"></div><div class="bg-[#FFF0E6] border-2 border-orange-200 rounded-[12px] p-3"><label class="text-[7px] font-black text-[#FF5A00]">VALIDADE</label><input id="validade" value="7 dias" class="w-full bg-transparent font-black text-[11px] outline-none"></div><div class="bg-black text-white rounded-[12px] p-3"><p class="text-[8px] opacity-50">TOTAL GERAL</p><p id="total" class="text-[18px] font-black text-[#FF5A00]">R$ 0,00</p></div></div><select id="status" class="w-full border rounded-[10px] p-3 mt-3 text-[12px] font-bold"><option value="andamento">Em Andamento</option><option value="finalizado">Finalizado</option></select></div>
+</div>
+<div class="bg-white text-black rounded-[20px] p-5 h-fit sticky top-3"><h3 class="font-black text-[12px]">Prévia para Cliente</h3><div id="previa" class="bg-[#f5f5f5] rounded-[12px] p-3 text-[11px] whitespace-pre-wrap mt-3 min-h-[150px]">Preencha os dados...</div><button onclick="salvarCliente()" class="w-full bg-black text-white rounded-[12px] py-3 font-black mt-3 text-[12px]">SALVAR NO CONTROLE</button><button onclick="gerarPDF()" class="w-full bg-[#FF5A00] text-white rounded-[12px] py-3 font-black mt-2 text-[12px]">GERAR PDF PREMIUM COM MARCA</button><button onclick="enviarZap()" class="w-full bg-[#25D366] text-white rounded-[12px] py-3 font-black mt-2 text-[12px]">ENVIAR NO ZAP DO CLIENTE</button></div>
+</div>
+</div>
+
 </div>
 
 <script>
-let pecas=[];let clientes=JSON.parse(localStorage.getItem('prates_clientes')||'[]');let agenda=JSON.parse(localStorage.getItem('prates_agenda')||'[]');
-function login(){let s=document.getElementById('senhaAdmin').value;if(s==='prates304050'){document.getElementById('loginAdmin').style.display='none';localStorage.setItem('prates_logado','sim');atualizarTudo();}else{document.getElementById('erroLogin').style.display='block';}}
-if(localStorage.getItem('prates_logado')==='sim'){document.getElementById('loginAdmin').style.display='none';}
-function aba(n){for(let i=1;i<=8;i++){let el=document.getElementById('aba'+i);if(el)el.style.display=i===n?'block':'none';let b=document.getElementById('t'+i);if(b){b.className=n===i?'tab-active':'tab';b.style.borderRadius='20px';b.style.padding='10px 16px';b.style.fontSize='10px';b.style.fontWeight='900';if(n===i){b.style.background='black';b.style.color='white';}else{b.style.background='white';b.style.color='black';}}}if(n!==8)atualizarTudo();}
-function addPeca(){pecas.push({peca:'',marca:'',tipo:'Freio',qtd:1,valor:0});render();}
-function remover(i){pecas.splice(i,1);render();}
-function render(){let l=document.getElementById('lista');l.innerHTML='';document.getElementById('contador').innerText=pecas.length+' peças';pecas.forEach((p,i)=>{l.innerHTML+=`<div style="background:#f9f9f9;border:1px solid #ddd;border-radius:10px;padding:8px;margin-bottom:8px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px"><input value="${p.peca}" oninput="pecas[${i}].peca=this.value;calc()" placeholder="Peça" style="border:1px solid #ccc;background:white;border-radius:6px;padding:8px;font-size:11px;font-weight:bold"><input value="${p.marca}" oninput="pecas[${i}].marca=this.value;calc()" placeholder="MARCA: Brembo" style="border:2px solid orange;background:#fff7ed;border-radius:6px;padding:8px;font-size:11px;font-weight:900"></div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-top:4px"><select onchange="pecas[${i}].tipo=this.value;calc()" style="border:1px solid #ccc;background:white;border-radius:6px;padding:8px;font-size:9px"><option>Freio</option><option>Motor</option><option>Original</option><option>Genuína</option><option>Paralela</option></select><input type="number" value="${p.qtd}" oninput="pecas[${i}].qtd=parseInt(this.value)||1;calc()" style="border:1px solid #ccc;background:white;border-radius:6px;padding:8px;text-align:center;font-weight:900"><input type="number" value="${p.valor}" oninput="pecas[${i}].valor=parseFloat(this.value)||0;calc()" placeholder="Valor" style="border:1px solid #ccc;background:white;border-radius:6px;padding:8px;font-weight:900"></div><button onclick="remover(${i})" style="font-size:8px;color:red;font-weight:900;margin-top:4px">REMOVER</button></div>`});calc();}
-function calc(){let tp=0;pecas.forEach(b=>{tp+=b.valor*b.qtd});let mo=parseFloat(document.getElementById('mao').value)||0;document.getElementById('total').innerText='R$ '+(tp+mo).toFixed(2);let txt=(document.getElementById('nome').value||'[NOME]')+' | '+(document.getElementById('placa').value||'[PLACA]')+'\n';pecas.forEach(p=>{txt+=p.peca+' | MARCA:'+p.marca+' R$ '+(p.valor*p.qtd).toFixed(2)+'\n'});txt+='\nTOTAL R$ '+(tp+mo).toFixed(2);document.getElementById('previa').innerText=txt;}
-function salvarCliente(){let tp=0;pecas.forEach(b=>tp+=b.valor*b.qtd);let mo=parseFloat(document.getElementById('mao').value)||0;let dias=parseInt(document.getElementById('garantia').value)||90;let venc=new Date();venc.setDate(venc.getDate()+dias);let c={id:Date.now(),nome:document.getElementById('nome').value,zap:document.getElementById('zap').value,veiculo:document.getElementById('veiculo').value,placa:(document.getElementById('placa').value||'').toUpperCase(),km:document.getElementById('km').value,servico:document.getElementById('servico').value,status:document.getElementById('status').value,pecas:[...pecas],totalPecas:tp,mao:mo,total:tp+mo,data:new Date().toISOString(),dataStr:new Date().toLocaleString('pt-BR'),garantiaStr:document.getElementById('garantia').value,garantiaVenc:venc.toISOString()};if(!c.nome||!c.placa){alert('Nome e Placa obrigatórios');return;}clientes.unshift(c);localStorage.setItem('prates_clientes',JSON.stringify(clientes));alert('Salvo!');atualizarTudo();}
-function atualizarTudo(){let hoje=new Date().toDateString();let hojeTotal=0,mesTotal=0,mesMao=0,mesPecas=0,marcaCount={};let vencendo=0;let agora=new Date();let mesAtual=agora.getMonth();clientes.forEach(c=>{let d=new Date(c.data);if(d.toDateString()===hoje)hojeTotal+=c.total;if(d.getMonth()===mesAtual){mesTotal+=c.total;mesMao+=c.mao;mesPecas+=c.totalPecas;}c.pecas.forEach(p=>{if(p.marca)marcaCount[p.marca]=(marcaCount[p.marca]||0)+1;});let v=new Date(c.garantiaVenc);let diff=(v-agora)/(1000*60*60*24);if(diff>=0&&diff<=7)vencendo++;});document.getElementById('dashTotal').innerText=clientes.length;document.getElementById('dashAnd').innerText=clientes.filter(c=>c.status==='andamento').length;document.getElementById('dashGar').innerText=vencendo;document.getElementById('dashHoje').innerText='R$ '+hojeTotal.toFixed(0);let fh=document.getElementById('finHoje');if(fh)fh.innerText='R$ '+hojeTotal.toFixed(2);let fm=document.getElementById('finMes');if(fm)fm.innerText='R$ '+mesTotal.toFixed(2);let fmao=document.getElementById('finMao');if(fmao)fmao.innerText='R$ '+mesMao.toFixed(2);let fpec=document.getElementById('finPecas');if(fpec)fpec.innerText='R$ '+mesPecas.toFixed(2);let fmc=document.getElementById('finMarcas');if(fmc){fmc.innerHTML='';Object.entries(marcaCount).sort((a,b)=>b[1]-a[1]).slice(0,5).forEach(([m,q])=>{fmc.innerHTML+=`<div style="display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:4px 0;font-size:11px"><span style="font-weight:bold">${m}</span><span>${q} vendas</span></div>`});}renderListas();renderGarantias();renderAgenda();renderLembretes();}
-function renderListas(){let lc=document.getElementById('listaClientes');let ld=document.getElementById('listaDash');if(!lc||!ld)return;lc.innerHTML='';ld.innerHTML='';clientes.forEach(c=>{let html=`<div style="border:1px solid #ddd;border-radius:10px;padding:8px;display:flex;justify-content:space-between;align-items:center;font-size:11px;margin-bottom:6px"><div><b>${c.nome}</b> - ${c.placa}<br><span style="opacity:.6">${c.veiculo} | R$ ${c.total.toFixed(2)} | ${c.status}</span></div><div><button onclick="finalizar(${c.id})" style="background:black;color:white;padding:4px 8px;border-radius:20px;font-size:8px">OK</button> <button onclick="excluir(${c.id})" style="background:#fee2e2;color:red;padding:4px 8px;border-radius:20px;font-size:8px">X</button></div></div>`;lc.innerHTML+=html;ld.innerHTML+=html;});}
-function buscarPlaca(){let p=document.getElementById('buscaPlaca').value.toUpperCase();let res=clientes.filter(c=>c.placa.includes(p));let div=document.getElementById('historicoPlaca');div.innerHTML='';if(res.length===0){div.innerHTML='<p style="font-size:11px;opacity:.5">Nenhum histórico</p>';return;}res.forEach(c=>{div.innerHTML+=`<div style="border:1px solid #ddd;border-radius:10px;padding:12px;font-size:11px;margin-bottom:6px"><b>${c.dataStr}</b> - ${c.servico}<br>${c.pecas.map(x=>x.peca+' (MARCA:'+x.marca+')').join(', ')}<br><b>Total R$ ${c.total.toFixed(2)} | KM ${c.km}</b></div>`});}
-function renderGarantias(){let venc=document.getElementById('garVencendo');let ativa=document.getElementById('garAtiva');if(!venc||!ativa)return;venc.innerHTML='';ativa.innerHTML='';let agora=new Date();clientes.forEach(c=>{let v=new Date(c.garantiaVenc);let diff=(v-agora)/(1000*60*60*24);let html=`<div style="border:1px solid #ddd;border-radius:10px;padding:8px;font-size:11px;margin-bottom:6px"><b>${c.nome}</b> ${c.placa}<br>Vence ${v.toLocaleDateString('pt-BR')} - ${c.garantiaStr}<br><button onclick="zapGar('${c.zap}','${c.nome}')" style="background:#22c55e;color:white;padding:4px 8px;border-radius:20px;font-size:8px;margin-top:4px">ZAP</button></div>`;if(diff>=0&&diff<=7)venc.innerHTML+=html;else if(diff>7)ativa.innerHTML+=html;});}
-function zapGar(zap,nome){let num='55'+zap.replace(/\D/g,'');let msg=`Olá ${nome}, aqui é da Prates Auto Center. Sua garantia vence em breve. Estamos à disposição!`;window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');}
-function addAgenda(){let ag={id:Date.now(),data:document.getElementById('agData').value,hora:document.getElementById('agHora').value,nome:document.getElementById('agNome').value,placa:(document.getElementById('agPlaca').value||'').toUpperCase(),serv:document.getElementById('agServ').value,status:document.getElementById('agStatus').value};if(!ag.nome){alert('Nome obrigatório');return;}agenda.unshift(ag);localStorage.setItem('prates_agenda',JSON.stringify(agenda));renderAgenda();}
-function renderAgenda(){let div=document.getElementById('listaAgenda');if(!div)return;div.innerHTML='';agenda.forEach(a=>{let cor=a.status==='Na Rampa'?'#fef9c3':a.status==='Pronto'?'#dcfce7':a.status==='Esperando Peça'?'#fee2e2':'#f3f3f3';div.innerHTML+=`<div style="background:${cor};border:1px solid #ddd;border-radius:10px;padding:8px;font-size:10px"><b>${a.data} ${a.hora}</b><br>${a.nome} ${a.placa}<br>${a.serv}<br><span style="background:black;color:white;padding:2px 6px;border-radius:10px;font-size:8px">${a.status}</span> <button onclick="delAgenda(${a.id})" style="color:red;font-weight:900"> X</button></div>`});}
-function delAgenda(id){agenda=agenda.filter(a=>a.id!==id);localStorage.setItem('prates_agenda',JSON.stringify(agenda));renderAgenda();}
-function renderLembretes(){let div=document.getElementById('listaLembretes');if(!div)return;div.innerHTML='';let agora=new Date();clientes.forEach(c=>{let d=new Date(c.data);let diff=(agora-d)/(1000*60*60*24);if(diff>=150){div.innerHTML+=`<div style="border:1px solid #ddd;border-radius:10px;padding:8px;font-size:11px;display:flex;justify-content:space-between;margin-bottom:6px"><div><b>${c.nome}</b> ${c.placa}<br><span style="opacity:.6">Último: ${c.dataStr} - ${c.servico}</span></div><button onclick="zapLembrete('${c.zap}','${c.nome}')" style="background:#25D366;color:white;padding:6px 12px;border-radius:20px;font-size:9px;font-weight:900">LEMBRAR</button></div>`}});if(div.innerHTML==='')div.innerHTML='<p style="font-size:11px;opacity:.5">Nenhum lembrete por enquanto</p>';}
-function zapLembrete(zap,nome){let num='55'+zap.replace(/\D/g,'');let msg=`Olá ${nome}, aqui é da Prates Auto Center! Já faz 5 meses da sua última visita. Que tal agendar sua troca de óleo/revisão?`;window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');}
-function finalizar(id){let c=clientes.find(x=>x.id===id);if(c){c.status='finalizado';localStorage.setItem('prates_clientes',JSON.stringify(clientes));atualizarTudo();}}
-function excluir(id){if(confirm('Excluir?')){clientes=clientes.filter(c=>c.id!==id);localStorage.setItem('prates_clientes',JSON.stringify(clientes));atualizarTudo();}}
-function filtrarDash(q){let ld=document.getElementById('listaDash');ld.innerHTML='';clientes.filter(c=>(c.nome+c.placa).toLowerCase().includes(q.toLowerCase())).forEach(c=>{ld.innerHTML+=`<div style="border:1px solid #ddd;border-radius:10px;padding:8px;font-size:11px;margin-bottom:4px"><b>${c.nome}</b> ${c.placa} R$ ${c.total.toFixed(2)}</div>`});}
-function enviarZap(){let txt=document.getElementById('previa').innerText;let zap=document.getElementById('zap').value;let num=zap?'55'+zap.replace(/\D/g,''):'5573998460804';window.open('https://wa.me/'+num+'?text='+encodeURIComponent(txt),'_blank');}
-async function gerarPDF(){const{jsPDF}=window.jspdf;const doc=new jsPDF();const W=210;doc.setFillColor(15,15,15);doc.rect(0,0,W,36,'F');doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(255,90,0);doc.text('PRATES AUTO CENTER',12,20);doc.setFontSize(9);doc.setTextColor(255,255,255);doc.text('FATURA PREMIUM COM MARCA',W-12,18,{align:'right'});let y=46;doc.setFillColor(240,240,240);doc.roundedRect(10,y,90,28,2,2,'F');doc.roundedRect(110,y,90,28,2,2,'F');doc.setTextColor(0,0,0);doc.setFontSize(8);doc.text('Cliente: '+(document.getElementById('nome').value||''),12,y+8);doc.text('Zap: '+(document.getElementById('zap').value||''),12,y+14);doc.text('Veiculo: '+(document.getElementById('veiculo').value||'')+' '+(document.getElementById('placa').value||''),112,y+8);doc.text('KM: '+(document.getElementById('km').value||''),112,y+14);y+=38;doc.setFillColor(255,90,0);doc.rect(10,y,190,9,'F');doc.setTextColor(255,255,255);doc.text('Peça',12,y+6);doc.text('Marca Separada',45,y+6);doc.text('Qtd',115,y+6);doc.text('Total',155,y+6);y+=10;doc.setTextColor(0,0,0);let tp=0;pecas.forEach(p=>{let sub=p.valor*p.qtd;tp+=sub;doc.text((p.peca||'').substring(0,22),12,y+5);doc.setFont('helvetica','bold');doc.text((p.marca||'').substring(0,15),45,y+5);doc.setFont('helvetica','normal');doc.text(String(p.qtd),115,y+5);doc.text('R$ '+sub.toFixed(2),155,y+5);y+=7;});let mo=parseFloat(document.getElementById('mao').value)||0;doc.setFont('helvetica','bold');doc.setTextColor(255,90,0);doc.text('TOTAL R$ '+(tp+mo).toFixed(2),W-12,y+8,{align:'right'});doc.save('ORCAMENTO-'+(document.getElementById('placa').value||'cliente')+'.pdf');}
-addPeca();atualizarTudo();aba(1);
+let pecas = [];
+let clientes = JSON.parse(localStorage.getItem('prates_clientes') || '[]');
+let agenda = JSON.parse(localStorage.getItem('prates_agenda') || '[]');
+
+function login() {
+  let senha = document.getElementById('senhaAdmin').value;
+  if (senha === 'prates304050') {
+    document.getElementById('loginAdmin').style.display = 'none';
+    localStorage.setItem('prates_logado','sim');
+    atualizarTudo();
+  } else {
+    document.getElementById('erroLogin').classList.remove('hidden');
+  }
+}
+
+if (localStorage.getItem('prates_logado') === 'sim') {
+  document.getElementById('loginAdmin').style.display = 'none';
+}
+
+function aba(n) {
+  for (let i = 1; i <= 8; i++) {
+    let el = document.getElementById('aba'+i);
+    if (el) el.classList.toggle('hidden', i !== n);
+    let b = document.getElementById('t'+i);
+    if (b) {
+      b.classList.toggle('tab-active', i === n);
+      b.classList.toggle('tab', i !== n);
+    }
+  }
+  atualizarTudo();
+}
+
+function addPeca() {
+  pecas.push({peca:'',marca:'',tipo:'Freio',qtd:1,valor:0});
+  render();
+}
+function remover(i) {
+  pecas.splice(i,1);
+  render();
+}
+function render() {
+  let l = document.getElementById('lista');
+  l.innerHTML = '';
+  document.getElementById('contador').innerText = pecas.length + ' peças';
+  pecas.forEach((p,i)=>{
+    l.innerHTML += "<div class='bg-[#f9f9f9] border rounded-[12px] p-3'><div class='grid grid-cols-2 gap-2'><input value='"+p.peca+"' oninput='pecas["+i+"].peca=this.value;calc()' placeholder='Peça ex: Pastilha Freio' class='border bg-white rounded-[8px] p-2 text-[11px] font-bold'><input value='"+p.marca+"' oninput='pecas["+i+"].marca=this.value;calc()' placeholder='MARCA: Brembo' class='border-2 border-orange-200 bg-[#FFF7F0] rounded-[8px] p-2 text-[11px] font-black'></div><div class='grid grid-cols-3 gap-2 mt-2'><select onchange='pecas["+i+"].tipo=this.value;calc()' class='border bg-white rounded-[8px] p-2 text-[10px]'><option>Freio</option><option>Motor</option><option>Lubrificante</option><option>Original</option><option>Genuína</option><option>Paralela</option></select><input type='number' value='"+p.qtd+"' oninput='pecas["+i+"].qtd=parseInt(this.value)||1;calc()' class='border bg-white rounded-[8px] p-2 text-center font-black'><input type='number' value='"+p.valor+"' oninput='pecas["+i+"].valor=parseFloat(this.value)||0;calc()' placeholder='Valor' class='border bg-white rounded-[8px] p-2 font-black'></div><button onclick='remover("+i+")' class='mt-2 text-[8px] text-red-500 font-black'>REMOVER</button></div>";
+  });
+  calc();
+}
+function calc() {
+  let tp = 0;
+  pecas.forEach(b=>{tp += b.valor * b.qtd;});
+  let mo = parseFloat(document.getElementById('mao').value) || 0;
+  document.getElementById('total').innerText = 'R$ ' + (tp+mo).toFixed(2);
+  let nome = document.getElementById('nome').value || '[NOME]';
+  let placa = document.getElementById('placa').value || '[PLACA]';
+  let veic = document.getElementById('veiculo').value || '[VEICULO]';
+  let txt = nome + ' | ' + veic + ' | ' + placa + '\n\n';
+  pecas.forEach(p=>{txt += p.peca + ' | MARCA: ' + p.marca + ' | R$ ' + (p.valor * p.qtd).toFixed(2) + '\n';});
+  txt += '\nTOTAL R$ ' + (tp+mo).toFixed(2);
+  document.getElementById('previa').innerText = txt;
+}
+function salvarCliente() {
+  let tp = 0;
+  pecas.forEach(b=>{tp += b.valor * b.qtd;});
+  let mo = parseFloat(document.getElementById('mao').value) || 0;
+  let dias = parseInt(document.getElementById('garantia').value) || 90;
+  let venc = new Date();
+  venc.setDate(venc.getDate()+dias);
+  let c = {
+    id: Date.now(),
+    nome: document.getElementById('nome').value,
+    zap: document.getElementById('zap').value,
+    veiculo: document.getElementById('veiculo').value,
+    placa: (document.getElementById('placa').value || '').toUpperCase(),
+    km: document.getElementById('km').value,
+    servico: document.getElementById('servico').value,
+    status: document.getElementById('status').value,
+    pecas: [...pecas],
+    totalPecas: tp,
+    mao: mo,
+    total: tp+mo,
+    data: new Date().toISOString(),
+    dataStr: new Date().toLocaleString('pt-BR'),
+    garantiaStr: document.getElementById('garantia').value,
+    garantiaVenc: venc.toISOString()
+  };
+  if (!c.nome || !c.placa) { alert('Preencha nome e placa'); return; }
+  clientes.unshift(c);
+  localStorage.setItem('prates_clientes', JSON.stringify(clientes));
+  alert('Salvo no controle!');
+  atualizarTudo();
+  aba(2);
+}
+function atualizarTudo() {
+  let hojeStr = new Date().toDateString();
+  let hojeTotal = 0, mesTotal = 0, mesMao = 0, mesPecas = 0, marcaCount = {};
+  let vencendo = 0;
+  let agora = new Date();
+  let mesAtual = agora.getMonth();
+  clientes.forEach(c=>{
+    let d = new Date(c.data);
+    if (d.toDateString() === hojeStr) hojeTotal += c.total;
+    if (d.getMonth() === mesAtual) { mesTotal += c.total; mesMao += c.mao; mesPecas += c.totalPecas; }
+    c.pecas.forEach(p=>{ if (p.marca) marcaCount[p.marca] = (marcaCount[p.marca]||0)+1; });
+    let v = new Date(c.garantiaVenc);
+    let diff = (v-agora)/(1000*60*60*24);
+    if (diff >= 0 && diff <= 7) vencendo++;
+  });
+  document.getElementById('dashTotal').innerText = clientes.length;
+  document.getElementById('dashAnd').innerText = clientes.filter(c=>c.status==='andamento').length;
+  document.getElementById('dashGar').innerText = vencendo;
+  document.getElementById('dashHoje').innerText = 'R$ ' + hojeTotal.toFixed(0);
+  document.getElementById('finHoje').innerText = 'R$ ' + hojeTotal.toFixed(2);
+  document.getElementById('finMes').innerText = 'R$ ' + mesTotal.toFixed(2);
+  document.getElementById('finMao').innerText = 'R$ ' + mesMao.toFixed(2);
+  document.getElementById('finPecas').innerText = 'R$ ' + mesPecas.toFixed(2);
+  let fm = document.getElementById('finMarcas');
+  fm.innerHTML = '';
+  Object.entries(marcaCount).sort((a,b)=>b[1]-a[1]).slice(0,5).forEach(([m,q])=>{
+    fm.innerHTML += "<div class='flex justify-between border-b py-2 text-[11px]'><span class='font-bold'>"+m+"</span><span>"+q+" vendas</span></div>";
+  });
+  renderListas();
+  renderGarantias();
+  renderAgenda();
+  renderLembretes();
+}
+function renderListas() {
+  let lc = document.getElementById('listaClientes');
+  let ld = document.getElementById('listaDash');
+  lc.innerHTML = ''; ld.innerHTML = '';
+  clientes.forEach(c=>{
+    let html = "<div class='border rounded-[12px] p-3 flex justify-between items-center'><div><p class='font-black text-[12px]'>"+c.nome+" - "+c.placa+"</p><p class='text-[10px] opacity-60'>"+c.veiculo+" | R$ "+c.total.toFixed(2)+" | "+c.status+"</p></div><div class='flex gap-2'><button onclick='finalizar("+c.id+")' class='bg-black text-white px-3 py-1 rounded-full text-[9px] font-black'>OK</button><button onclick='excluir("+c.id+")' class='bg-red-100 text-red-600 px-3 py-1 rounded-full text-[9px] font-black'>X</button></div></div>";
+    lc.innerHTML += html;
+    ld.innerHTML += html;
+  });
+}
+function buscarPlaca() {
+  let p = document.getElementById('buscaPlaca').value.toUpperCase();
+  let res = clientes.filter(c=>c.placa.includes(p));
+  let div = document.getElementById('historicoPlaca');
+  div.innerHTML = '';
+  if (res.length === 0) { div.innerHTML = '<p class=text-[11px] opacity-50>Nenhum histórico</p>'; return; }
+  res.forEach(c=>{
+    div.innerHTML += "<div class='border rounded-[12px] p-3 text-[11px]'><b>"+c.dataStr+"</b> - "+c.servico+" - KM "+c.km+"<br>"+c.pecas.map(x=>x.peca+" (MARCA:"+x.marca+")").join(', ')+"<br><b>Total R$ "+c.total.toFixed(2)+"</b></div>";
+  });
+}
+function renderGarantias() {
+  let venc = document.getElementById('garVencendo');
+  let ativa = document.getElementById('garAtiva');
+  venc.innerHTML = ''; ativa.innerHTML = '';
+  let agora = new Date();
+  clientes.forEach(c=>{
+    let v = new Date(c.garantiaVenc);
+    let diff = (v-agora)/(1000*60*60*24);
+    let html = "<div class='border rounded-[12px] p-3 text-[11px]'><b>"+c.nome+"</b> "+c.placa+"<br>Vence "+v.toLocaleDateString('pt-BR')+" - "+c.garantiaStr+"<br><button onclick='zapGar(\""+c.zap+"\",\""+c.nome+"\")' class='bg-green-500 text-white px-3 py-1 rounded-full text-[8px] mt-1 font-black'>ZAP</button></div>";
+    if (diff >= 0 && diff <= 7) venc.innerHTML += html;
+    else if (diff > 7) ativa.innerHTML += html;
+  });
+}
+function zapGar(zap,nome) {
+  let num = '55' + zap.replace(/\D/g,'');
+  let msg = 'Olá '+nome+', aqui é da Prates Auto Center. Sua garantia vence em breve. Estamos à disposição!';
+  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');
+}
+function addAgenda() {
+  let ag = {
+    id: Date.now(),
+    data: document.getElementById('agData').value,
+    hora: document.getElementById('agHora').value,
+    nome: document.getElementById('agNome').value,
+    placa: document.getElementById('agPlaca').value.toUpperCase(),
+    serv: document.getElementById('agServ').value,
+    status: document.getElementById('agStatus').value
+  };
+  if (!ag.data || !ag.nome) { alert('Data e nome obrigatórios'); return; }
+  agenda.unshift(ag);
+  localStorage.setItem('prates_agenda', JSON.stringify(agenda));
+  renderAgenda();
+}
+function renderAgenda() {
+  let div = document.getElementById('listaAgenda');
+  div.innerHTML = '';
+  agenda.forEach(a=>{
+    let cor = a.status==='Na Rampa'?'bg-yellow-100':a.status==='Pronto'?'bg-green-100':a.status==='Esperando Peça'?'bg-red-100':'bg-gray-100';
+    div.innerHTML += "<div class='"+cor+" border rounded-[12px] p-3 text-[11px]'><b>"+a.data+" "+a.hora+"</b><br>"+a.nome+" - "+a.placa+"<br>"+a.serv+"<br><span class='bg-black text-white px-2 py-1 rounded-full text-[8px] font-black mt-1 inline-block'>"+a.status+"</span> <button onclick='delAgenda("+a.id+")' class='text-red-500 font-black ml-2'>X</button></div>";
+  });
+}
+function delAgenda(id) {
+  agenda = agenda.filter(a=>a.id!==id);
+  localStorage.setItem('prates_agenda', JSON.stringify(agenda));
+  renderAgenda();
+}
+function renderLembretes() {
+  let div = document.getElementById('listaLembretes');
+  div.innerHTML = '';
+  let agora = new Date();
+  clientes.forEach(c=>{
+    let d = new Date(c.data);
+    let diff = (agora-d)/(1000*60*60*24);
+    if (diff >= 150) {
+      div.innerHTML += "<div class='border rounded-[12px] p-3 text-[11px] flex justify-between items-center'><div><b>"+c.nome+"</b> "+c.placa+"<br><span class='opacity-60'>Último: "+c.dataStr+" - "+c.servico+"</span></div><button onclick='zapLembrete(\""+c.zap+"\",\""+c.nome+"\")' class='bg-[#25D366] text-white px-4 py-2 rounded-full text-[9px] font-black'>LEMBRAR</button></div>";
+    }
+  });
+  if (div.innerHTML === '') div.innerHTML = '<p class=text-[11px] opacity-50>Nenhum lembrete por enquanto</p>';
+}
+function zapLembrete(zap,nome) {
+  let num = '55' + zap.replace(/\D/g,'');
+  let msg = 'Olá '+nome+', aqui é da Prates Auto Center! Já faz 5 meses da sua última visita. Que tal agendar sua troca de óleo/revisão?';
+  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');
+}
+function finalizar(id) {
+  let c = clientes.find(x=>x.id===id);
+  if (c) { c.status='finalizado'; localStorage.setItem('prates_clientes', JSON.stringify(clientes)); atualizarTudo(); }
+}
+function excluir(id) {
+  if (confirm('Excluir cliente?')) {
+    clientes = clientes.filter(c=>c.id!==id);
+    localStorage.setItem('prates_clientes', JSON.stringify(clientes));
+    atualizarTudo();
+  }
+}
+function filtrarDash(q) {
+  let ld = document.getElementById('listaDash');
+  ld.innerHTML = '';
+  clientes.filter(c=>(c.nome+c.placa).toLowerCase().includes(q.toLowerCase())).forEach(c=>{
+    ld.innerHTML += "<div class='border rounded-[12px] p-3 text-[11px]'><b>"+c.nome+"</b> "+c.placa+" R$ "+c.total.toFixed(2)+"</div>";
+  });
+}
+function enviarZap() {
+  let txt = document.getElementById('previa').innerText;
+  let zap = document.getElementById('zap').value;
+  let num = zap ? '55'+zap.replace(/\D/g,'') : '5573998460804';
+  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(txt),'_blank');
+}
+async function gerarPDF() {
+  const {jsPDF} = window.jspdf;
+  const doc = new jsPDF();
+  const W = 210;
+  doc.setFillColor(15,15,15);
+  doc.rect(0,0,W,36,'F');
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(20);
+  doc.setTextColor(255,90,0);
+  doc.text('PRATES AUTO CENTER',12,20);
+  doc.setFontSize(9);
+  doc.setTextColor(255,255,255);
+  doc.text('FATURA PREMIUM COM MARCA SEPARADA',W-12,18,{align:'right'});
+  let y = 46;
+  doc.setFillColor(240,240,240);
+  doc.roundedRect(10,y,90,28,2,2,'F');
+  doc.roundedRect(110,y,90,28,2,2,'F');
+  doc.setTextColor(0,0,0);
+  doc.setFontSize(8);
+  doc.text('Cliente: '+(document.getElementById('nome').value||''),12,y+8);
+  doc.text('Zap: '+(document.getElementById('zap').value||''),12,y+14);
+  doc.text('Veiculo: '+(document.getElementById('veiculo').value||'')+' '+(document.getElementById('placa').value||''),112,y+8);
+  doc.text('KM: '+(document.getElementById('km').value||''),112,y+14);
+  y+=38;
+  doc.setFillColor(255,90,0);
+  doc.rect(10,y,190,9,'F');
+  doc.setTextColor(255,255,255);
+  doc.text('Peça',12,y+6);
+  doc.text('Marca Separada',45,y+6);
+  doc.text('Qtd',115,y+6);
+  doc.text('Total',155,y+6);
+  y+=10;
+  doc.setTextColor(0,0,0);
+  let tp = 0;
+  pecas.forEach(p=>{
+    let sub = p.valor * p.qtd;
+    tp += sub;
+    if (y>270) { doc.addPage(); y=15; }
+    doc.text((p.peca||'').substring(0,22),12,y+5);
+    doc.setFont('helvetica','bold');
+    doc.text((p.marca||'').substring(0,15),45,y+5);
+    doc.setFont('helvetica','normal');
+    doc.text(String(p.qtd),115,y+5);
+    doc.text('R$ '+sub.toFixed(2),155,y+5);
+    y+=7;
+  });
+  let mo = parseFloat(document.getElementById('mao').value)||0;
+  doc.setFont('helvetica','bold');
+  doc.setTextColor(255,90,0);
+  doc.text('TOTAL R$ '+(tp+mo).toFixed(2),W-12,y+8,{align:'right'});
+  doc.save('ORCAMENTO-'+(document.getElementById('placa').value||'cliente')+'.pdf');
+}
+
+addPeca();
+atualizarTudo();
+aba(1);
 document.getElementById('senhaAdmin').addEventListener('keydown',e=>{if(e.key==='Enter')login();});
 </script>
-</body></html>
+</body>
+</html>
