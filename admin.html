@@ -2,41 +2,67 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADM Oculto - Prates</title>
+<title>ADM Premium - Prates Auto Center</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
-<body class="bg-[#f5f5f5] p-3">
-<div class="max-w-[720px] mx-auto bg-white rounded-[22px] p-7 shadow-xl border border-gray-100">
-<div class="flex justify-between items-center mb-4"><h1 class="font-black text-[#FF6B00] text-[20px]">PRATES ADM OCULTO</h1><a href="index.html" class="text-[10px] bg-black text-white px-3 py-1.5 rounded-full">VOLTAR AO SITE</a></div>
-<p class="text-[11px] text-gray-400 mb-5">Sistema completo - Peça com MARCA + Mão de obra + Prazo + Garantia separados</p>
-
-<div class="grid grid-cols-1 gap-3">
-<label class="text-[11px] font-black tracking-wider">CLIENTE</label><input id="cliente" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-3.5 text-sm outline-none" placeholder="Ex: João Silva">
-<div class="grid grid-cols-2 gap-3">
-<div><label class="text-[11px] font-black">WHATSAPP CLIENTE (só números)</label><input id="whatsCliente" type="tel" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm font-bold" placeholder="73998460804"></div>
-<div><label class="text-[11px] font-black">VEÍCULO / PLACA</label><input id="veiculo" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm" placeholder="Hilux 2020 - ABC1234"></div>
+<body class="bg-[#f2f3f5] min-h-screen">
+<header class="bg-black border-b-[5px] border-[#FF6B00] px-5 py-4 sticky top-0 z-50">
+<div class="max-w-[760px] mx-auto flex justify-between items-center">
+<div><h1 class="text-white font-black text-[16px] tracking-[1px]">PRATES AUTO CENTER</h1><p class="text-[#FF6B00] font-bold text-[10px] tracking-[2px] mt-0.5">ADM PREMIUM OCULTO</p></div>
+<a href="index.html" class="bg-white/10 backdrop-blur text-white text-[10px] font-black px-4 py-2 rounded-full border border-white/10">VOLTAR SITE</a>
 </div>
-<label class="text-[11px] font-black tracking-wider mt-2">DIAGNÓSTICO REALIZADO</label>
-<textarea id="diagnostico" rows="3" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm outline-none" placeholder="Após inspeção completa, constatado desgaste..."></textarea>
+</header>
+
+<div class="max-w-[760px] mx-auto p-4 pb-20">
+<!-- CARD CLIENTE -->
+<div class="bg-white rounded-[24px] p-6 mt-3 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100">
+<div class="flex items-center gap-3"><div class="w-10 h-10 bg-[#FF6B00] rounded-full flex items-center justify-center text-white font-black">1</div><div><p class="font-black text-[14px]">Dados do Cliente e Veículo</p><p class="text-[11px] text-gray-500">Quem vai receber o orçamento</p></div></div>
+
+<div class="grid grid-cols-1 gap-3.5 mt-6">
+<div><label class="text-[10px] font-black tracking-widest text-gray-400 ml-1">NOME DO CLIENTE</label><input id="cliente" class="w-full mt-1.5 border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[14px] font-bold outline-none transition" placeholder="Ex: João Silva"></div>
+<div class="grid grid-cols-2 gap-3.5">
+<div><label class="text-[10px] font-black tracking-widest text-gray-400 ml-1">WHATSAPP CLIENTE</label><input id="whatsCliente" type="tel" class="w-full mt-1.5 border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[14px] font-black outline-none" placeholder="73998460804 - só números"></div>
+<div><label class="text-[10px] font-black tracking-widest text-gray-400 ml-1">VEÍCULO / PLACA</label><input id="veiculo" class="w-full mt-1.5 border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[14px] outline-none" placeholder="Hilux 2020 - ABC1234"></div>
 </div>
-
-<p class="font-black mt-7 text-[12px] tracking-wider border-l-4 border-[#FF6B00] pl-3">📦 PEÇAS (COM MARCA SEPARADA)</p>
-<div id="listaPecas" class="mt-3"></div>
-<button onclick="addPeca()" class="w-full mt-3 bg-black text-white rounded-[14px] py-3.5 text-[12px] font-black tracking-wider">+ ADICIONAR PEÇA COM MARCA</button>
-
-<div class="grid grid-cols-3 gap-3 mt-7">
-<div><label class="text-[10px] font-black tracking-wider text-[#FF6B00]">MÃO DE OBRA (SEPARADO) R$</label><input id="maoObra" type="number" value="80" oninput="calcular()" class="w-full border-2 border-orange-200 bg-orange-50 rounded-[14px] p-3.5 mt-1 text-sm font-black"></div>
-<div><label class="text-[10px] font-black tracking-wider">PRAZO (SEPARADO)</label><input id="prazo" value="2 horas" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm font-bold"></div>
-<div><label class="text-[10px] font-black tracking-wider">GARANTIA (SEPARADO)</label><input id="garantia" value="90 dias" class="w-full border-2 border-gray-100 rounded-[14px] p-3.5 mt-1 text-sm font-bold"></div>
+<div><label class="text-[10px] font-black tracking-widest text-gray-400 ml-1">DIAGNÓSTICO REALIZADO POR VOCÊ</label><textarea id="diagnostico" rows="3" class="w-full mt-1.5 border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] outline-none leading-6" placeholder="Após inspeção completa, constatado desgaste nas pastilhas, disco empenado..."></textarea></div>
+</div>
 </div>
 
-<div id="totalBox" class="mt-6 bg-black text-[#FF6B00] p-5 rounded-[16px] text-center font-black text-[20px] tracking-wider">TOTAL GERAL: R$ 0,00</div>
+<!-- CARD PEÇAS -->
+<div class="bg-white rounded-[24px] p-6 mt-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3"><div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white font-black">2</div><div><p class="font-black text-[14px]">Peças com MARCA separada</p><p class="text-[11px] text-gray-500">Informe a marca de cada peça - Transparência</p></div></div>
+<span id="contadorPecas" class="bg-[#FFF0E5] text-[#FF6B00] text-[11px] font-black px-3 py-1 rounded-full">0 peças</span>
+</div>
 
-<button onclick="salvarNoFirebase()" class="w-full mt-5 bg-[#FF6B00] hover:bg-orange-600 text-white rounded-[14px] py-4 font-black text-[13px] tracking-wider shadow-[0_8px_20px_rgba(255,107,0,0.3)]">💾 SALVAR NO SITE + GERAR PDF AUTOMÁTICO</button>
-<button onclick="enviarWhats()" class="w-full mt-3 bg-[#25D366] text-white rounded-[14px] py-4 font-black text-[13px]">💬 ENVIAR DIRETO NO WHATSAPP DO CLIENTE</button>
-<p id="status" class="text-center font-black mt-4 text-[12px]"></p>
+<div id="listaPecas" class="mt-5 space-y-3"></div>
+
+<button onclick="addPeca()" class="w-full mt-5 bg-black hover:bg-zinc-800 text-white rounded-[14px] py-4 font-black text-[12px] tracking-wider flex items-center justify-center gap-2"><span class="text-[16px]">+</span> ADICIONAR PEÇA COM MARCA</button>
+</div>
+
+<!-- CARD VALORES SEPARADOS -->
+<div class="bg-white rounded-[24px] p-6 mt-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100">
+<div class="flex items-center gap-3"><div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white font-black">3</div><div><p class="font-black text-[14px]">Valores Separados</p><p class="text-[11px] text-gray-500">Mão de obra, prazo e garantia - tudo separado como pediu</p></div></div>
+
+<div class="grid grid-cols-3 gap-3 mt-6">
+<div class="bg-[#FFF7F0] border-2 border-[#FFDCC0] rounded-[16px] p-4"><label class="text-[9px] font-black tracking-widest text-[#FF6B00]">MÃO DE OBRA</label><div class="flex items-center gap-1 mt-2"><span class="text-[12px] font-black">R$</span><input id="maoObra" type="number" value="80" oninput="calcular()" class="w-full bg-transparent text-[18px] font-black outline-none"></div><p class="text-[9px] text-orange-300 font-bold mt-1">SEPARADO</p></div>
+<div class="bg-[#f9fafb] border-2 border-gray-100 rounded-[16px] p-4"><label class="text-[9px] font-black tracking-widest text-gray-400">PRAZO</label><input id="prazo" value="2 horas" class="w-full bg-transparent text-[15px] font-black outline-none mt-2"><p class="text-[9px] text-gray-300 font-bold mt-1">SEPARADO</p></div>
+<div class="bg-[#f9fafb] border-2 border-gray-100 rounded-[16px] p-4"><label class="text-[9px] font-black tracking-widest text-gray-400">GARANTIA</label><input id="garantia" value="90 dias" class="w-full bg-transparent text-[15px] font-black outline-none mt-2"><p class="text-[9px] text-gray-300 font-bold mt-1">SEPARADO</p></div>
+</div>
+
+<div id="totalBox" class="mt-6 bg-black rounded-[16px] p-6 text-center"><p class="text-white/40 text-[9px] font-black tracking-[4px]">TOTAL GERAL DO ORÇAMENTO</p><p class="text-[#FF6B00] font-black text-[34px] mt-1 tracking-tight">R$ 0,00</p><p class="text-white/30 text-[10px] mt-1">Peças + Mão de obra</p></div>
+</div>
+
+<!-- AÇÕES -->
+<div class="grid grid-cols-1 gap-3 mt-4">
+<button onclick="salvarNoFirebase()" class="w-full bg-[#FF6B00] hover:bg-orange-600 text-white rounded-[16px] py-5 font-black text-[13px] tracking-wider shadow-[0_12px_30px_rgba(255,107,0,0.3)] flex items-center justify-center gap-2">💾 SALVAR NO SITE + GERAR PDF AUTOMÁTICO</button>
+<button onclick="enviarWhats()" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-[16px] py-4 font-black text-[13px] flex items-center justify-center gap-2">💬 ENVIAR DIRETO NO WHATSAPP DO CLIENTE</button>
+</div>
+
+<p id="status" class="text-center font-black mt-6 text-[13px]"></p>
+<div class="text-center mt-6 text-[11px] text-gray-400">Senha ADM oculto: prates2024 • Acesso: 5 cliques no logo do site cliente</div>
 </div>
 
 <script type="module">
@@ -59,25 +85,34 @@ window.addPeca=(nome='',marca='',qtd=1,valor=0)=>{
 }
 window.render=()=>{
   const div=document.getElementById('listaPecas'); div.innerHTML='';
+  document.getElementById('contadorPecas').innerText=`${pecas.length} peças`;
   pecas.forEach((p,i)=>{
-    div.innerHTML+=`<div class="grid grid-cols-[1.6fr_1fr_50px_90px_36px] gap-1.5 mt-2">
-      <input value="${p.peca}" oninput="pecas[${i}].peca=this.value" placeholder="Nome da peça" class="border-2 border-gray-100 rounded-xl p-2.5 text-[12px]">
-      <input value="${p.marca}" oninput="pecas[${i}].marca=this.value" placeholder="Marca ex: Bosch" class="border-2 border-orange-100 bg-orange-50 rounded-xl p-2.5 text-[12px] font-black">
-      <input type="number" value="${p.qtd}" oninput="pecas[${i}].qtd=parseInt(this.value)||1;calcular()" class="border-2 border-gray-100 rounded-xl p-2.5 text-[12px] text-center font-bold">
-      <input type="number" value="${p.valor}" oninput="pecas[${i}].valor=parseFloat(this.value)||0;calcular()" class="border-2 border-gray-100 rounded-xl p-2.5 text-[12px] font-bold">
-      <button onclick="pecas.splice(${i},1);render();calcular()" class="bg-red-500 hover:bg-red-600 text-white rounded-xl font-black">X</button>
+    div.innerHTML+=`
+    <div class="bg-[#f9fafb] border-2 border-gray-100 hover:border-gray-200 rounded-[16px] p-4 transition group">
+      <div class="grid grid-cols-[1fr_1fr] gap-3">
+        <div><label class="text-[9px] font-black text-gray-400 tracking-widest ml-1">NOME DA PEÇA</label><input value="${p.peca}" oninput="pecas[${i}].peca=this.value" placeholder="Pastilha Freio Dianteira" class="w-full mt-1 border-2 border-white focus:border-[#FF6B00] bg-white rounded-[12px] p-3.5 text-[13px] font-bold outline-none"></div>
+        <div><label class="text-[9px] font-black text-[#FF6B00] tracking-widest ml-1">MARCA (SEPARADA)</label><input value="${p.marca}" oninput="pecas[${i}].marca=this.value" placeholder="Ex: Bosch, Cobreq" class="w-full mt-1 border-2 border-orange-100 focus:border-[#FF6B00] bg-[#FFF7F0] rounded-[12px] p-3.5 text-[13px] font-black outline-none"></div>
+      </div>
+      <div class="grid grid-cols-[70px_120px_1fr] gap-3 mt-3">
+        <div><label class="text-[9px] font-black text-gray-400 ml-1">QTD</label><input type="number" value="${p.qtd}" oninput="pecas[${i}].qtd=parseInt(this.value)||1;calcular()" class="w-full mt-1 border-2 border-white bg-white rounded-[12px] p-3 text-[13px] font-black text-center outline-none"></div>
+        <div><label class="text-[9px] font-black text-gray-400 ml-1">VALOR UNIT R$</label><input type="number" value="${p.valor}" oninput="pecas[${i}].valor=parseFloat(this.value)||0;calcular()" class="w-full mt-1 border-2 border-white bg-white rounded-[12px] p-3 text-[13px] font-black outline-none"></div>
+        <div class="flex items-end"><button onclick="removerPeca(${i})" class="w-full bg-[#FFE9E9] hover:bg-red-500 hover:text-white text-red-500 border border-red-100 rounded-[12px] py-3.5 font-black text-[11px] transition">🗑️ REMOVER PEÇA</button></div>
+      </div>
+      <div class="text-right mt-2"><span class="text-[11px] text-gray-400">Subtotal:</span> <span class="font-black text-[12px]">R$ ${(p.valor*p.qtd).toFixed(2)}</span></div>
     </div>`;
   }); calcular();
 }
+window.removerPeca=(i)=>{ if(confirm(`Remover "${pecas[i].peca || 'essa peça'}"?`)){ pecas.splice(i,1); render(); } }
 window.calcular=()=>{
   let totalPecas=pecas.reduce((s,p)=>s+(parseFloat(p.valor)||0)*(parseInt(p.qtd)||1),0);
   let mao=parseFloat(document.getElementById('maoObra').value)||0;
-  document.getElementById('totalBox').innerText=`TOTAL GERAL: R$ ${(totalPecas+mao).toFixed(2)}`;
+  document.getElementById('totalBox').innerHTML=`<p class="text-white/40 text-[9px] font-black tracking-[4px]">TOTAL GERAL DO ORÇAMENTO</p><p class="text-[#FF6B00] font-black text-[34px] mt-1 tracking-tight">R$ ${(totalPecas+mao).toFixed(2)}</p><p class="text-white/30 text-[10px] mt-1">Peças R$ ${totalPecas.toFixed(2)} + Mão de obra R$ ${mao.toFixed(2)}</p>`;
 }
 window.salvarNoFirebase=async()=>{
   const cliente=document.getElementById('cliente').value.trim();
   const whats=document.getElementById('whatsCliente').value.replace(/\D/g,'');
   if(!cliente||!whats){alert("Preencha Cliente e WhatsApp com DDD");return;}
+  if(pecas.length===0){alert("Adicione pelo menos 1 peça");return;}
   const dados={
     cliente, whats, veiculo:document.getElementById('veiculo').value,
     diagnostico:document.getElementById('diagnostico').value,
@@ -92,25 +127,39 @@ window.salvarNoFirebase=async()=>{
   document.getElementById('status').innerText="⏳ Salvando no Firebase...";
   try{
     await addDoc(collection(db,"orcamentos"),dados);
-    document.getElementById('status').innerText="✅ SALVO! Cliente já pode buscar pelo WhatsApp no site oculto";
+    document.getElementById('status').innerText="✅ SALVO! Cliente já pode consultar no site com o WhatsApp dele";
     gerarPDF(dados);
   }catch(e){document.getElementById('status').innerText="❌ Erro: "+e.message}
 }
 window.gerarPDF=(d)=>{
   const {jsPDF}=window.jspdf; const doc=new jsPDF();
-  doc.setFillColor(255,107,0); doc.rect(0,0,210,22,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.setTextColor(255,255,255); doc.text('PRATES AUTO CENTER - ADM OCULTO',14,14);
-  doc.setTextColor(0,0,0); doc.setFontSize(10); doc.text(`Cliente: ${d.cliente} | Whats: ${d.whats} | Veiculo: ${d.veiculo}`,14,30); doc.text(`Diagnostico: ${d.diagnostico}`,14,36);
+  doc.setFillColor(255,107,0); doc.rect(0,0,210,24,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(255,255,255); doc.text('PRATES AUTO CENTER - ORÇAMENTO PREMIUM',14,15);
+  doc.setTextColor(0,0,0); doc.setFontSize(10); doc.setFont('helvetica','normal');
+  doc.text(`Cliente: ${d.cliente} | Whats: ${d.whats}`,14,32);
+  doc.text(`Veículo: ${d.veiculo} | Data: ${d.data}`,14,38);
+  doc.setFont('helvetica','bold'); doc.text('Diagnóstico:',14,46); doc.setFont('helvetica','normal'); doc.text(doc.splitTextToSize(d.diagnostico,180),14,52);
   let body=d.pecas.map(p=>[p.peca,p.marca,p.qtd,`R$ ${p.valor}`,`R$ ${(p.valor*p.qtd).toFixed(2)}`]);
-  doc.autoTable({startY:42, head:[['ITEM','MARCA','QTD','UNIT','TOTAL']], body:body, headStyles:{fillColor:[255,107,0]}});
-  let y=doc.lastAutoTable.finalY+6; doc.setFillColor(245,245,245); doc.rect(14,y,182,12,'F'); doc.setTextColor(0,0,0); doc.text(`MAO DE OBRA: R$ ${d.maoObra} | PRAZO: ${d.prazo} | GARANTIA: ${d.garantia}`,16,y+8);
-  y+=16; doc.setFillColor(0,0,0); doc.rect(14,y,182,14,'F'); doc.setTextColor(255,107,0); doc.setFontSize(14); doc.text(`TOTAL GERAL: R$ ${d.total.toFixed(2)}`,16,y+10);
-  doc.save(`ORC_${d.cliente.replace(/\s/g,'_')}.pdf`);
+  doc.autoTable({startY:70, head:[['ITEM','MARCA SEPARADA','QTD','UNIT','TOTAL']], body:body, headStyles:{fillColor:[255,107,0], fontStyle:'bold'}, styles:{fontSize:9}});
+  let y=doc.lastAutoTable.finalY+8;
+  doc.setFillColor(255,247,240); doc.rect(14,y,182,12,'F'); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.setTextColor(0,0,0); doc.text(`MÃO DE OBRA (SEPARADA): R$ ${d.maoObra} | PRAZO (SEPARADO): ${d.prazo} | GARANTIA (SEPARADA): ${d.garantia}`,16,y+8);
+  y+=18; doc.setFillColor(0,0,0); doc.rect(14,y,182,16,'F'); doc.setTextColor(255,107,0); doc.setFontSize(16); doc.text(`TOTAL GERAL: R$ ${d.total.toFixed(2)}`,16,y+11);
+  doc.save(`ORC_${d.cliente.replace(/\s/g,'_')}_${Date.now()}.pdf`);
 }
 window.enviarWhats=()=>{
   const whats=document.getElementById('whatsCliente').value.replace(/\D/g,'');
   const cliente=document.getElementById('cliente').value;
-  const total=document.getElementById('totalBox').innerText;
-  window.open(`https://wa.me/55${whats}?text=Olá ${cliente}! ✅ Seu orçamento ${total} da Prates Auto Center está pronto! Consulte no site: https://manojhon12344321-ship-it.github.io/ digitando seu WhatsApp.`, '_blank');
+  const total=document.getElementById('totalBox').innerText.replace(/\n/g,' ');
+  if(!whats){alert("Digite o WhatsApp do cliente");return;}
+  const msg=`*✅ ORÇAMENTO PRONTO - PRATES AUTO CENTER*
+
+Olá ${cliente}! Seu orçamento está pronto!
+${total}
+Consulte com detalhes no site:
+https://manojhon12344321-ship-it.github.io/pratescenter/
+Digite seu WhatsApp: ${whats}
+
+Dúvidas? Responda aqui!`;
+  window.open(`https://wa.me/55${whats}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 addPeca('Pastilha Freio Dianteira','Cobreq',1,180);
 addPeca('Disco Freio Dianteiro','Fremax',1,320);
