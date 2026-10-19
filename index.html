@@ -2,168 +2,37 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prates Auto Center - Oficina em Teixeira de Freitas</title>
+<title>Prates Auto Center - Oficina Premium</title>
 <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>*{font-family:Inter} html{scroll-behavior:smooth}</style>
 </head>
-<body class="bg-[#f6f7f8]">
-<header class="bg-black border-b-[5px] border-[#FF6B00] px-5 py-4 flex justify-between items-center sticky top-0 z-40">
-<h1 id="logoSecret" class="text-white font-black text-[15px] tracking-[1px]">PRATES AUTO CENTER</h1>
-<span class="text-[8px] text-white/20 tracking-widest">TOQUE 5X NO LOGO</span>
+<body class="bg-[#f8f9fb]">
+<header class="bg-white border-b border-gray-100 sticky top-0 z-50">
+<div class="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
+<div class="flex items-center gap-3" onclick="let c=window.clq=(window.clq||0)+1;if(c>=5){if(prompt('Senha ADM:')==='prates2024')location.href='admin.html';window.clq=0;}"><div class="w-11 h-11 bg-[#FF5A00] rounded-[12px] flex items-center justify-center text-white font-black">🔧</div><p class="font-black leading-[16px] text-[18px]">Prates<br><span class="text-[#FF5A00]">Auto Center</span></p></div>
+<a href="#orc" class="bg-[#FF5A00] text-white px-6 py-3 rounded-full font-black text-[12px]">Agendar Agora</a>
+</div>
 </header>
-
-<div class="max-w-[480px] mx-auto p-4 pb-20">
-<!-- HERO APRESENTAVEL -->
-<div class="bg-gradient-to-br from-black to-zinc-800 rounded-[28px] p-7 mt-2 text-white relative overflow-hidden">
-<div class="absolute top-0 right-0 w-32 h-32 bg-[#FF6B00]/20 rounded-full blur-[30px]"></div>
-<p class="text-[#FF6B00] font-black text-[10px] tracking-[3px]">OFICINA MECÂNICA • DESDE 2010</p>
-<h2 class="font-black text-[26px] leading-[28px] mt-3">Seu carro em<br>mãos de <span class="text-[#FF6B00]">especialista</span></h2>
-<p class="text-[12px] text-white/60 mt-3 leading-5">Diagnóstico real, peças com marca informada, mão de obra separada e garantia por escrito.</p>
-<div class="grid grid-cols-3 gap-2 mt-6">
-<div class="bg-white/10 rounded-[14px] p-3 text-center backdrop-blur"><p class="text-[18px]">🔧</p><p class="text-[9px] font-bold mt-1">MECÂNICA</p></div>
-<div class="bg-white/10 rounded-[14px] p-3 text-center backdrop-blur"><p class="text-[18px]">⚙️</p><p class="text-[9px] font-bold mt-1">INJEÇÃO</p></div>
-<div class="bg-white/10 rounded-[14px] p-3 text-center backdrop-blur"><p class="text-[18px]">🛞</p><p class="text-[9px] font-bold mt-1">FREIOS</p></div>
-</div>
-</div>
-
-<!-- ABAS -->
-<div class="flex gap-2 mt-5 bg-white p-1.5 rounded-[16px] border border-gray-100">
-<button id="aba1" onclick="mostraAba(1)" class="flex-1 bg-black text-white rounded-[12px] py-3 font-black text-[11px]">📝 SOLICITAR ORÇAMENTO</button>
-<button id="aba2" onclick="mostraAba(2)" class="flex-1 text-gray-400 rounded-[12px] py-3 font-black text-[11px]">🔍 CONSULTAR O MEU</button>
-</div>
-
-<!-- ABA 1: CLIENTE MANDA PROBLEMA -->
-<div id="painel1" class="bg-white rounded-[24px] p-6 mt-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100">
-<h3 class="font-black text-[15px]">O que seu carro está apresentando?</h3>
-<p class="text-[11px] text-gray-500 mt-1">Preencha e envia direto no WhatsApp da oficina. Chega tudo organizadinho pra gente.</p>
-
-<div class="space-y-3 mt-5">
-<input id="cNome" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] font-bold outline-none" placeholder="Seu nome completo">
-<input id="cWhats" type="tel" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] font-bold outline-none" placeholder="Seu WhatsApp com DDD (ex: 739...)">
-<input id="cCarro" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] outline-none" placeholder="Seu carro - Ex: Hilux 2020 - ABC1234">
-
-<label class="text-[10px] font-black tracking-wider">TIPO DE PROBLEMA</label>
-<select id="cTipo" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] font-bold outline-none bg-white">
-<option value="Barulho estranho">🔊 Barulho estranho</option>
-<option value="Freio">🛞 Freio</option>
-<option value="Suspensão">🔩 Suspensão</option>
-<option value="Motor falhando">⚙️ Motor falhando / Injeção</option>
-<option value="Elétrica">💡 Elétrica / Luz no painel</option>
-<option value="Vazamento">💧 Vazamento de óleo / água</option>
-<option value="Revisão">✅ Revisão preventiva</option>
-<option value="Outro">❓ Outro problema</option>
-</select>
-
-<textarea id="cDesc" rows="4" class="w-full border-2 border-gray-100 focus:border-[#FF6B00] rounded-[14px] p-4 text-[13px] outline-none" placeholder="Descreva com detalhes: Quando começou? Faz barulho quando freia? Pisca alguma luz? Quanto mais detalhes, melhor o diagnóstico..."></textarea>
-
-<button onclick="enviarSolicitacao()" class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-[14px] py-4 font-black text-[14px] shadow-[0_10px_20px_rgba(37,211,102,0.3)]">💬 ENVIAR PARA O WHATSAPP DA OFICINA</button>
-<p class="text-center text-[10px] text-gray-400 mt-2">Você será redirecionado para o WhatsApp da Prates com a mensagem pronta e bonita</p>
-</div>
-</div>
-
-<!-- ABA 2: CONSULTAR ORÇAMENTO JA FEITO -->
-<div id="painel2" class="hidden bg-white rounded-[24px] p-6 mt-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] border border-gray-100">
-<div class="flex gap-3 items-center"><div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white">🔍</div><div><h3 class="font-black text-[14px]">Consultar meu orçamento pronto</h3><p class="text-[11px] text-gray-500">Digite seu WhatsApp com DDD</p></div></div>
-<div class="flex gap-2 mt-5">
-<input id="buscaWhats" type="tel" class="flex-1 border-2 border-gray-200 focus:border-[#FF6B00] rounded-[14px] px-4 py-4 text-[14px] font-bold outline-none" placeholder="73998460804">
-<button onclick="buscarFirebase()" class="bg-black text-white px-7 py-4 rounded-[14px] font-black text-[12px]">BUSCAR</button>
-</div>
-</div>
-
-<div id="resultado" class="hidden mt-5"></div>
-
-<div class="text-center mt-8 text-[11px] text-gray-400">📍 Teixeira de Freitas - BA<br>Whats Oficina: (73) 99846-0804<br>Prates Auto Center</div>
-</div>
-
-<!-- MODAL ADM OCULTO -->
-<div id="modalAdm" class="hidden fixed inset-0 bg-black/85 z-[99] flex items-center justify-center p-6">
-<div class="bg-white rounded-[24px] p-7 w-full max-w-[340px]">
-<p class="font-black text-center">ADM Oculto</p><input id="senhaAdm" type="password" class="w-full border-2 rounded-xl p-3 mt-4" placeholder="Senha prates2024">
-<button onclick="if(document.getElementById('senhaAdm').value==='prates2024')window.location.href='admin.html';else alert('Senha errada')" class="w-full bg-[#FF6B00] text-white rounded-xl py-3 font-black mt-3">ENTRAR</button>
-<button onclick="document.getElementById('modalAdm').classList.add('hidden')" class="w-full mt-2 text-xs text-gray-400">Cancelar</button>
-</div>
-</div>
-
-<script>
-let clicks=0;
-document.getElementById('logoSecret').addEventListener('click',()=>{clicks++;if(clicks>=5){document.getElementById('modalAdm').classList.remove('hidden');clicks=0;} setTimeout(()=>clicks=0,2500);});
-if(window.location.search.includes('pratesadm')) document.getElementById('modalAdm').classList.remove('hidden');
-
-function mostraAba(n){
-  document.getElementById('painel1').classList.toggle('hidden', n!==1);
-  document.getElementById('painel2').classList.toggle('hidden', n!==2);
-  document.getElementById('aba1').className = n===1 ? "flex-1 bg-black text-white rounded-[12px] py-3 font-black text-[11px]" : "flex-1 text-gray-400 rounded-[12px] py-3 font-black text-[11px]";
-  document.getElementById('aba2').className = n===2 ? "flex-1 bg-black text-white rounded-[12px] py-3 font-black text-[11px]" : "flex-1 text-gray-400 rounded-[12px] py-3 font-black text-[11px]";
-  document.getElementById('resultado').classList.add('hidden');
-}
-
-function enviarSolicitacao(){
-  const nome=document.getElementById('cNome').value.trim();
-  const whats=document.getElementById('cWhats').value.trim();
-  const carro=document.getElementById('cCarro').value.trim();
-  const tipo=document.getElementById('cTipo').value;
-  const desc=document.getElementById('cDesc').value.trim();
-  if(!nome||!whats||!carro||!desc){alert("Preencha tudo por favor!");return;}
-  
-  const msg=`*🔧 NOVA SOLICITAÇÃO - PRATES AUTO CENTER*
-
-*👤 CLIENTE:* ${nome}
-*📱 WHATS:* ${whats}
-*🚗 VEÍCULO:* ${carro}
-*⚠️ TIPO:* ${tipo}
-
-*📝 DESCRIÇÃO DO PROBLEMA:*
-${desc}
-
-_Enviado pelo site: manojhon12344321-ship-it.github.io/pratescenter_
-*Horário:* ${new Date().toLocaleString('pt-BR')}`;
-
-  window.open(`https://wa.me/5573998460804?text=${encodeURIComponent(msg)}`,'_blank');
-}
-</script>
-
+<section class="max-w-[1200px] mx-auto px-6 py-14 grid md:grid-cols-2 gap-10 items-center">
+<div><span class="bg-[#FFE9D9] text-[#FF5A00] text-[10px] font-black tracking-widest px-4 py-2 rounded-full">⭐ 4.9 • 1000+ CLIENTES • GARANTIA 90 DIAS</span><h1 class="text-[42px] md:text-[56px] font-black leading-[0.9] tracking-tighter mt-6">Cuidado Premium<br>para o seu <span class="text-[#FF5A00]">Veículo</span></h1><p class="text-gray-500 text-[15px] mt-5 leading-7">Manutenção com transparência: marca separada, mão de obra separada, foto do diagnóstico e garantia por escrito.</p><div class="flex gap-3 mt-8"><a href="#orc" class="bg-[#FF5A00] text-white px-8 py-4 rounded-[14px] font-black text-[13px]">📅 Agendar Revisão</a><button onclick="document.getElementById('consultar').scrollIntoView()" class="bg-white border-2 border-gray-100 px-8 py-4 rounded-[14px] font-black text-[13px]">🔍 Consultar</button></div></div>
+<div class="bg-white rounded-[32px] p-3 shadow-[0_30px_80px_rgba(0,0,0,0.12)]"><img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=900" class="rounded-[24px] w-full h-[420px] object-cover"></div>
+</section>
+<section class="bg-white py-12 border-y border-gray-100"><div class="max-w-[1200px] mx-auto px-6 grid md:grid-cols-3 gap-6"><div class="bg-[#fcfcfd] border border-gray-100 rounded-[24px] p-8"><p class="font-black">Mecânica</p><p class="text-[13px] text-gray-500 mt-2">Revisão, motor, suspensão e diagnóstico com scanner.</p></div><div class="bg-[#fcfcfd] border border-gray-100 rounded-[24px] p-8"><p class="font-black">Injeção</p><p class="text-[13px] text-gray-500 mt-2">Bicos, injeção eletrônica e scanner premium.</p></div><div class="bg-[#fcfcfd] border border-gray-100 rounded-[24px] p-8"><p class="font-black">Freios</p><p class="text-[13px] text-gray-500 mt-2">Pastilhas, discos, fluido e segurança.</p></div></div></section>
+<section id="orc" class="max-w-[780px] mx-auto px-6 py-16">
+<div class="bg-white rounded-[32px] p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-gray-100"><p class="font-black text-[18px]">O que seu carro está apresentando?</p><div class="grid gap-4 mt-6"><div class="grid md:grid-cols-2 gap-4"><input id="nome" placeholder="Seu nome *" class="border-2 border-gray-100 rounded-[14px] p-4 text-[14px] font-bold outline-none"><input id="zap" placeholder="WhatsApp *" class="border-2 border-gray-100 rounded-[14px] p-4 text-[14px] font-black outline-none"></div><input id="carro" placeholder="Veículo e placa" class="border-2 border-gray-100 rounded-[14px] p-4 text-[14px]"><textarea id="problema" rows="4" placeholder="Descreva o problema" class="border-2 border-gray-100 rounded-[14px] p-4 text-[14px]"></textarea><button onclick="enviarParaOficina()" class="bg-black text-white rounded-[14px] py-5 font-black text-[13px]">ENVIAR PARA WHATSAPP DA OFICINA →</button></div></div>
+<div id="consultar" class="bg-[#111] rounded-[32px] p-8 mt-8 text-white"><p class="font-black text-[18px]">Já fez orçamento? Consulte aqui</p><div class="flex gap-3 mt-5"><input id="consultaZap" placeholder="Seu WhatsApp" class="flex-1 bg-white/10 border border-white/10 rounded-[14px] p-4 text-[14px] font-black outline-none"><button onclick="consultar()" class="bg-[#FF5A00] px-8 rounded-[14px] font-black text-[12px]">CONSULTAR</button></div><div id="resultadoConsulta" class="mt-6"></div></div>
+<div id="aprovacaoBox" class="hidden bg-[#E8F5E9] border-2 border-green-200 rounded-[24px] p-8 mt-8 text-black"><h3 class="font-black">✅ Link de aprovação recebido!</h3><p id="aprovacaoTexto" class="text-[13px] mt-2"></p><div class="grid grid-cols-2 gap-3 mt-5"><button onclick="aprovarOrc(true)" class="bg-green-600 text-white rounded-[12px] py-3 font-black text-[12px]">✅ APROVAR</button><button onclick="aprovarOrc(false)" class="bg-white border-2 rounded-[12px] py-3 font-black text-[12px]">❌ NÃO APROVAR</button></div></div>
+</section>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
-import { getFirestore, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyDklYzIeYg6-PNwd7lGufPLyXVQaSalZlA",
-  authDomain: "pratescenter.firebaseapp.com",
-  projectId: "pratescenter",
-  storageBucket: "pratescenter.firebasestorage.app",
-  messagingSenderId: "168571076583",
-  appId: "1:168571076583:web:a8fd30ec2bffa4ca4e8742"
-};
-const db = getFirestore(initializeApp(firebaseConfig));
-
-window.buscarFirebase=async()=>{
-  let whats=document.getElementById('buscaWhats').value.replace(/\D/g,'');
-  if(!whats){alert("Digite seu WhatsApp");return;}
-  const resDiv=document.getElementById('resultado');
-  resDiv.classList.remove('hidden');
-  resDiv.innerHTML="<div class='bg-white rounded-[24px] p-10 text-center font-black animate-pulse'>🔍 Buscando...</div>";
-  try{
-    const q=query(collection(db,"orcamentos"), where("whats","==",whats), orderBy("timestamp","desc"), limit(1));
-    const snap=await getDocs(q);
-    if(snap.empty){resDiv.innerHTML=`<div class='bg-white rounded-[24px] p-8 text-center'><p class='font-black'>Nenhum orçamento para ${whats}</p></div>`;return;}
-    const o=snap.docs[0].data();
-    let pecasHtml=o.pecas.map(p=>`<div class="flex justify-between py-3 border-b border-gray-100"><div><p class="font-bold text-[13px]">${p.peca}</p><p class="text-[10px] mt-1"><span class="bg-orange-50 text-[#FF6B00] font-black px-2 py-1 rounded-full">MARCA: ${p.marca}</span> ${p.qtd}x R$ ${p.valor}</p></div><p class="font-black text-[13px]">R$ ${(p.valor*p.qtd).toFixed(2)}</p></div>`).join('');
-    resDiv.innerHTML=`
-      <div class="bg-white rounded-[24px] overflow-hidden shadow-xl">
-        <div class="bg-gradient-to-r from-[#FF6B00] to-[#FF8A33] p-6 text-white"><p class="text-[9px] font-black tracking-[2px]">ORÇAMENTO OFICIAL</p><h2 class="font-black text-[20px] mt-1">${o.cliente}</h2><p class="text-[12px] mt-1">🚗 ${o.veiculo} • 📅 ${o.data}</p></div>
-        <div class="p-6">
-          <p class="font-black text-[11px] border-l-4 border-[#FF6B00] pl-2">DIAGNÓSTICO REALIZADO</p><div class="bg-gray-50 border rounded-[14px] p-4 mt-3 text-[13px]">${o.diagnostico}</div>
-          <p class="font-black text-[11px] border-l-4 border-[#FF6B00] pl-2 mt-6">ITENS E PEÇAS - MARCA SEPARADA</p><div class="mt-3 border-2 rounded-[14px] p-3">${pecasHtml}</div>
-          <div class="grid grid-cols-3 gap-2 mt-6">
-            <div class="bg-orange-50 border-2 border-orange-200 rounded-[14px] p-3 text-center"><p class="text-[8px] font-black text-orange-400">MÃO DE OBRA</p><p class="font-black text-[14px] mt-1">R$ ${o.maoObra}</p></div>
-            <div class="border-2 rounded-[14px] p-3 text-center"><p class="text-[8px] font-black text-gray-400">PRAZO</p><p class="font-black text-[13px] mt-1">${o.prazo}</p></div>
-            <div class="border-2 rounded-[14px] p-3 text-center"><p class="text-[8px] font-black text-gray-400">GARANTIA</p><p class="font-black text-[13px] mt-1">${o.garantia}</p></div>
-          </div>
-          <div class="bg-black rounded-[16px] p-5 text-center mt-6"><p class="text-white/50 text-[9px] tracking-[2px] font-black">TOTAL GERAL</p><p class="text-[#FF6B00] font-black text-[30px]">R$ ${Number(o.total).toFixed(2)}</p></div>
-          <a href="https://wa.me/5573998460804?text=Olá Prates! Sou ${o.cliente} e quero APROVAR meu orçamento de R$ ${o.total}" target="_blank" class="block w-full mt-4 bg-[#25D366] text-white font-black py-4 rounded-[16px] text-center">✅ APROVAR NO WHATSAPP</a>
-        </div>
-      </div>`;
-    resDiv.scrollIntoView({behavior:'smooth'});
-  }catch(e){resDiv.innerHTML=`<p class='bg-white p-6 rounded-xl text-center text-red-500 text-xs'>Erro: ${e.message}</p>`;}
-}
+import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
+const firebaseConfig = { apiKey: "AIzaSyDklYzIeYg6-PNwd7lGufPLyXVQaSalZlA", authDomain: "pratescenter.firebaseapp.com", projectId: "pratescenter", storageBucket: "pratescenter.firebasestorage.app", messagingSenderId: "168571076583", appId: "1:168571076583:web:a8fd30ec2bffa4ca4e8742" };
+const app = initializeApp(firebaseConfig); const db = getFirestore(app);
+window.enviarParaOficina=()=>{const n=document.getElementById('nome').value, z=document.getElementById('zap').value, c=document.getElementById('carro').value, p=document.getElementById('problema').value; if(!n||!z){alert("Preencha nome e WhatsApp");return;} const msg=`*NOVO PEDIDO - SITE PREMIUM*\n👤 ${n}\n📱 ${z}\n🚗 ${c}\n🔧 ${p}`; window.open(`https://wa.me/5573998460804?text=${encodeURIComponent(msg)}`,'_blank');};
+window.consultar=async()=>{const z=document.getElementById('consultaZap').value.replace(/\D/g,''); const res=document.getElementById('resultadoConsulta'); res.innerHTML="Buscando..."; const q=query(collection(db,"orcamentos"), where("whats","==",z)); const snap=await getDocs(q); if(snap.empty){res.innerHTML="<p class='text-white/60 text-[13px]'>Nenhum orçamento</p>";return;} let html=''; snap.forEach(d=>{const o=d.data(); html+=`<div class='bg-white text-black rounded-[24px] p-6 mt-4'><p class='font-black'>${o.codigo} - ${o.veiculo} - R$ ${o.total.toFixed(2)}</p><div class='mt-3 text-[12px]'>${o.pecas.map(p=>`${p.qtd}x ${p.peca} (${p.marca})`).join('<br>')}</div><p class='text-[11px] mt-3'>Mão obra SEPARADA: R$ ${o.maoObra} | Prazo: ${o.prazo} | Garantia: ${o.garantia} | Status: ${o.status}</p><p class='text-[11px] mt-2'>${o.diagnostico}</p></div>`}); res.innerHTML=html;};
+const params=new URLSearchParams(window.location.search); if(params.get('aprovacao')){document.getElementById('aprovacaoBox').classList.remove('hidden'); document.getElementById('aprovacaoTexto').innerText=`Código ${params.get('aprovacao')} - Zap ${params.get('zap')}`;}
+window.aprovarOrc=async(ap)=>{const codigo=params.get('aprovacao'); const q=query(collection(db,"orcamentos"), where("codigo","==",codigo)); const snap=await getDocs(q); snap.forEach(async d=>{await updateDoc(doc(db,"orcamentos",d.id),{status:ap?'Aprovado':'Reprovado'})}); alert(ap?'Aprovado!':'Reprovado'); location.href=location.pathname;};
 </script>
 </body>
 </html>
