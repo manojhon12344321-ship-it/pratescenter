@@ -1,125 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Prates Auto Center | Teixeira de Freitas - BA | Troca de Óleo, Freio, Suspensão</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
-body{background:#0a0a0a;color:#fff}
-a{text-decoration:none}
-.top{background:#111;border-bottom:2px solid #ff6a00;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;font-size:20px;color:#fff}.logo span{color:#ff6a00}
-.btn-zap{background:#ff6a00;color:#000;padding:10px 16px;border-radius:10px;font-weight:900;font-size:14px}
-.hero{padding:32px 16px;text-align:center;background:radial-gradient(circle at center,#1c1c1c,#0a0a0a)}
-.hero h1{font-size:32px;line-height:1.1}.hero h1 span{color:#ff6a00}
-.hero p{color:#aaa;margin:10px 0 18px}
-.btn-hero{background:#25D366;color:#fff;padding:16px 24px;border-radius:12px;font-weight:900;display:inline-block;font-size:16px}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px}
-.card{background:#1c1c1c;border:1px solid #2a2a2a;border-radius:14px;padding:16px;text-align:center}
-.card b{color:#fff;display:block;margin-top:6px}.card small{color:#aaa}
-.eficiencia{margin:16px;background:#fff;color:#000;border-radius:20px;padding:24px 16px}
-.eficiencia h2{text-align:center;font-size:22px}
-.stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;text-align:center;margin:16px 0}
-.stats div b{font-size:26px;color:#ff6a00;display:block}
-.passo{display:flex;gap:10px;margin:12px 0;align-items:center}
-.passo i{background:#ff6a00;color:#000;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-style:normal}
-.diagnostico{margin:16px;background:#111;border:2px solid #ff6a00;border-radius:16px;padding:20px 16px}
-label{color:#ff6a00;font-size:11px;font-weight:900;display:block;margin-top:12px}
-input,select,textarea{width:100%;padding:14px;border-radius:10px;border:1px solid #444;background:#000;color:#fff;margin-top:4px}
-.btn-enviar{width:100%;background:#25D366;color:#fff;border:none;padding:18px;border-radius:12px;font-weight:900;font-size:16px;margin-top:14px;cursor:pointer}
-.rodape{padding:20px 16px;text-align:center;color:#666;font-size:12px}
-</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Orçamento - Prates Auto Center</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<div class="top"><div class="logo">🔧 PRATES <span>AUTO CENTER</span></div><a class="btn-zap" href="https://wa.me/5573998460804">73 99846-0804</a></div>
+<body class="bg-[#f6f6f6]">
+<header class="bg-black border-b-4 border-[#FF6B00] p-4"><div class="max-w-4xl mx-auto flex justify-between"><p class="text-white font-black text-sm">PRATES AUTO CENTER</p><a href="admin.html" class="bg-[#FF6B00] text-white text-[10px] px-3 py-1 rounded-full">ADM</a></div></header>
 
-<div class="hero">
-<h1>Manutenção Automotiva em <span>Teixeira de Freitas - BA</span></h1>
-<p>Diagnóstico rápido, 3 opções de orçamento e garantia por escrito</p>
-<a class="btn-hero" href="https://wa.me/5573998460804?text=Quero%20agendar%20no%20Prates">💬 Fale no WhatsApp 73 99846-0804</a>
+<div class="max-w-4xl mx-auto p-4">
+<div class="bg-white rounded-[20px] p-6 shadow-sm mt-4">
+<h2 class="font-black text-[16px]">🔍 Consultar meu orçamento</h2>
+<p class="text-[11px] text-gray-500 mt-1">Digite seu WhatsApp com DDD (só números)</p>
+<div class="flex gap-2 mt-4">
+<input id="buscaWhats" class="flex-1 border-2 rounded-xl px-4 py-3 text-sm font-bold" placeholder="Ex: 73998460804">
+<button onclick="buscarFirebase()" class="bg-black text-white px-6 py-3 rounded-xl font-black text-sm">BUSCAR</button>
+</div>
 </div>
 
-<div class="cards">
-<div class="card">🔧<b>Troca de Óleo</b><small>Rápida e premium</small></div>
-<div class="card">🛑<b>Freio</b><small>Pastilhas e discos</small></div>
-<div class="card">🔩<b>Suspensão</b><small>Amortecedores</small></div>
-<div class="card">💻<b>Scanner</b><small>Diagnóstico eletrônico</small></div>
+<div id="resultado" class="hidden mt-4 bg-white rounded-[20px] overflow-hidden shadow-sm"><div id="conteudoResult"></div></div>
+
+<div class="text-center mt-10 text-[11px] text-gray-400">📍 Teixeira de Freitas - BA | Whats: (73) 99846-0804</div>
 </div>
 
-<div class="eficiencia">
-<h2>Por que o Prates é mais eficiente?</h2>
-<p style="text-align:center;color:#666;font-size:13px;margin-top:6px">Não somos a mais barata. Somos a mais rápida que não te deixa na mão.</p>
-<div class="stats">
-<div><b>45min</b><small>Tempo médio troca de óleo</small></div>
-<div><b>+3.200</b><small>Carros atendidos</small></div>
-<div><b>98%</b><small>Clientes que voltam</small></div>
-</div>
-<div class="passo"><i>1</i><div><b>Chegada + Scanner Grátis (10min)</b><br><small style="color:#666">Já sabemos o defeito sem chute</small></div></div>
-<div class="passo"><i>2</i><div><b>Diagnóstico com foto e vídeo</b><br><small style="color:#666">Você vê o problema no seu celular</small></div></div>
-<div class="passo"><i>3</i><div><b>3 Opções de orçamento</b><br><small style="color:#666">Econômica, Recomendada e Premium</small></div></div>
-<div class="passo"><i>4</i><div><b>Entrega com garantia</b><br><small style="color:#666">Nota + link com tudo trocado</small></div></div>
-<div style="text-align:center;margin-top:16px"><a href="https://wa.me/5573998460804" style="background:#ff6a00;color:#000;padding:12px 20px;border-radius:10px;font-weight:900;display:inline-block">Agendar agora - 73 99846-0804</a></div>
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+import { getFirestore, collection, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js";
 
-<!-- CAMPO DIAGNÓSTICO COMPLETO COM FOTO OPCIONAL -->
-<div class="diagnostico">
-<h2 style="text-align:center;color:#ff6a00">📲 Me manda o problema do seu carro</h2>
-<p style="text-align:center;color:#aaa;font-size:12px;margin:4px 0 10px">Já te mando pré-diagnóstico em 5min</p>
+const firebaseConfig = {
+  apiKey: "AIzaSyDklYzIeYg6-PNwd7lGufPLyXVQaSalZlA",
+  authDomain: "pratescenter.firebaseapp.com",
+  projectId: "pratescenter",
+  storageBucket: "pratescenter.firebasestorage.app",
+  messagingSenderId: "168571076583",
+  appId: "1:168571076583:web:a8fd30ec2bffa4ca4e8742"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-<label>1. SEU NOME *</label>
-<input id="c_nome" placeholder="Ex: João Silva">
-
-<label>2. CARRO + PLACA + KM *</label>
-<input id="c_carro" placeholder="Ex: Onix 2020 OUX1234 - 78.345km">
-
-<label>3. TIPO DO PROBLEMA *</label>
-<select id="c_tipo">
-<option value="">Selecione...</option>
-<option>🔊 Barulho ao frear / andar</option>
-<option>💡 Luz no painel acesa</option>
-<option>💧 Vazando óleo / água</option>
-<option>⚙️ Falhando / perdendo força</option>
-<option>🛢️ Troca de óleo / revisão</option>
-<option>❓ Outro</option>
-</select>
-
-<label>4. DESCRIÇÃO DETALHADA *</label>
-<textarea id="c_desc" rows="4" placeholder="Ex: Quando freio de manhã faz ferro com ferro..."></textarea>
-
-<label>5. FOTO / VÍDEO (OPCIONAL)</label>
-<div style="border:1px dashed #ff6a00;border-radius:10px;padding:10px;background:#000">
-<input type="file" id="c_foto" accept="image/*,video/*">
-<p style="color:#666;font-size:10px;margin-top:4px">Opcional. Ajuda muito no diagnóstico.</p>
-<div id="previewFoto" style="margin-top:6px"></div>
-</div>
-
-<button class="btn-enviar" onclick="enviarDiagnosticoCompleto()">📲 ENVIAR DIAGNÓSTICO - 73 99846-0804</button>
-<p id="msgFoto" style="text-align:center;color:#ff6a00;font-size:11px;margin-top:6px;display:none">⚠️ Após abrir WhatsApp, anexe a foto no clip 📎</p>
-</div>
-
-<div class="rodape">
-Prates Auto Center - Teixeira de Freitas BA<br>
-WhatsApp 73 99846-0804 | Garantia por escrito | Nota Fiscal<br>
-<a href="admin.html" style="color:#444">admin</a>
-</div>
-
-<script>
-let fotoSel=null;
-document.getElementById('c_foto').addEventListener('change',function(e){
- let f=e.target.files[0]; if(!f) return; fotoSel=f.name;
- document.getElementById('previewFoto').innerHTML=`<div style="color:#25D366;font-size:12px">✅ Foto: ${f.name}</div><img src="${URL.createObjectURL(f)}" style="width:100%;max-height:110px;object-fit:cover;border-radius:8px;margin-top:4px">`;
- document.getElementById('msgFoto').style.display='block';
-});
-function enviarDiagnosticoCompleto(){
- let nome=document.getElementById('c_nome').value.trim();
- let carro=document.getElementById('c_carro').value.trim();
- let tipo=document.getElementById('c_tipo').value;
- let desc=document.getElementById('c_desc').value.trim();
- if(!nome||!carro||!tipo||!desc){alert('Preencha NOME, CARRO, TIPO e DESCRIÇÃO');return;}
- let msg=`🔧 NOVO DIAGNÓSTICO - PRATES AUTO CENTER\n\n1. NOME: ${nome}\n2. CARRO: ${carro}\n3. TIPO: ${tipo}\n4. DESCRIÇÃO:\n${desc}\n\n5. FOTO: ${fotoSel?'✅ Selecionei: '+fotoSel+' (vou anexar)':'Sem foto'}\n\nEnviado pelo site - 73 99846-0804`;
- window.open('https://wa.me/5573998460804?text='+encodeURIComponent(msg),'_blank');
- if(fotoSel) setTimeout(()=>alert('📸 Agora no WhatsApp, clique no clip 📎 e anexe a foto!'),800);
+window.buscarFirebase=async()=>{
+  let whats=document.getElementById('buscaWhats').value.replace(/\D/g,'');
+  if(!whats){alert("Digite seu WhatsApp");return;}
+  document.getElementById('resultado').classList.remove('hidden');
+  document.getElementById('conteudoResult').innerHTML="<p class='p-8 text-center font-bold'>🔍 Buscando seu orçamento...</p>";
+  try{
+    const q=query(collection(db,"orcamentos"), where("whats","==",whats), orderBy("timestamp","desc"), limit(1));
+    const snap=await getDocs(q);
+    if(snap.empty){document.getElementById('conteudoResult').innerHTML="<div class='p-10 text-center'><p class='font-black'>Nenhum orçamento encontrado</p><p class='text-xs text-gray-500 mt-2'>Verifique o número: "+whats+"</p></div>";return;}
+    const o=snap.docs[0].data();
+    let pecasHtml=o.pecas.map(p=>`<div class="grid grid-cols-[2fr_1fr_35px_70px_70px] p-3 text-[11px] border-b items-center"><span>${p.peca}</span><span class="font-black text-[#FF6B00]">${p.marca}</span><span>${p.qtd}x</span><span>R$ ${p.valor}</span><span class="font-black">R$ ${(p.valor*p.qtd).toFixed(2)}</span></div>`).join('');
+    document.getElementById('conteudoResult').innerHTML=`
+      <div class="bg-[#FF6B00] p-5 text-white flex justify-between"><div><p class="text-[10px] opacity-80">ORÇAMENTO PRATES</p><p class="font-black text-[16px]">${o.cliente}</p><p class="text-[11px]">${o.veiculo}</p></div><div class="text-right"><p class="text-[10px]">Data</p><p class="font-bold text-[12px]">${o.data}</p></div></div>
+      <div class="p-5">
+        <p class="font-black text-[12px] border-l-4 border-[#FF6B00] pl-2 mb-2">DIAGNÓSTICO REALIZADO</p><p class="bg-gray-50 p-4 rounded-xl text-[13px] mb-5">${o.diagnostico}</p>
+        <p class="font-black text-[12px] border-l-4 border-[#FF6B00] pl-2 mb-2">ITENS E PEÇAS (COM MARCA)</p><div class="border-2 rounded-xl overflow-hidden mb-5"><div class="grid grid-cols-[2fr_1fr_35px_70px_70px] bg-black text-white text-[9px] font-bold p-3"><span>ITEM</span><span>MARCA</span><span>QTD</span><span>UNIT</span><span>TOTAL</span></div>${pecasHtml}</div>
+        <div class="grid grid-cols-3 gap-2 mb-5">
+          <div class="border-2 border-orange-200 bg-orange-50 rounded-xl p-3 text-center"><p class="text-[8px] font-black text-gray-500">MÃO DE OBRA</p><p class="font-black text-[13px] mt-1">R$ ${o.maoObra}</p></div>
+          <div class="border-2 rounded-xl p-3 text-center"><p class="text-[8px] font-black text-gray-500">PRAZO</p><p class="font-black text-[13px] mt-1">${o.prazo}</p></div>
+          <div class="border-2 rounded-xl p-3 text-center"><p class="text-[8px] font-black text-gray-500">GARANTIA</p><p class="font-black text-[13px] mt-1">${o.garantia}</p></div>
+        </div>
+        <div class="bg-black rounded-xl p-4 text-center"><p class="text-white text-[10px]">TOTAL GERAL DO ORÇAMENTO</p><p class="text-[#FF6B00] font-black text-[22px]">R$ ${Number(o.total).toFixed(2)}</p></div>
+        <a href="https://wa.me/5573998460804?text=Olá Prates! Sou ${o.cliente} (${o.veiculo}) e quero APROVAR meu orçamento de R$ ${o.total}" target="_blank" class="block w-full mt-4 bg-[#25D366] text-white font-black py-4 rounded-xl text-center text-[14px]">✅ APROVAR ORÇAMENTO NO WHATSAPP</a>
+        <p class="text-center text-[10px] text-gray-400 mt-3">Orçamento válido e separado conforme solicitado: peças com marca, mão de obra, prazo e garantia</p>
+      </div>`;
+  }catch(e){document.getElementById('conteudoResult').innerHTML=`<p class='p-6 text-red-500 text-center text-sm'>Erro: ${e.message}<br><br>Se pedir índice, clica no link que aparece no erro para criar o índice automático no Firebase.</p>`;}
 }
 </script>
 </body>
