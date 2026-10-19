@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prates Admin Completo</title>
+<style>*{box-sizing:border-box;font-family:Arial}body{background:#0f0f0f;color:#fff;padding:12px}input,select,textarea{width:100%;padding:12px;margin:4px 0;border-radius:8px;border:1px solid #333;background:#000;color:#fff}label{color:#ff6a00;font-weight:bold;font-size:11px;margin-top:10px;display:block}.card{background:#1c1c1c;border:1px solid #333;border-radius:10px;padding:12px;margin:8px 0}.btn{background:#ff6a00;color:#000;border:none;padding:14px;border-radius:10px;font-weight:900;width:100%;margin-top:8px;cursor:pointer}.btn-add{background:#222;color:#fff;border:1px dashed #555}.item-peca{background:#000;border:1px solid #222;border-radius:8px;padding:8px;margin:6px 0;display:grid;grid-template-columns:1fr 70px 80px 30px;gap:4px}</style></head><body>
+<h2>⚙️ Prates - Admin Completo</h2>
+<div id="loginBox"><input id="senha" type="password" placeholder="Senha"><button class="btn" onclick="if(document.getElementById('senha').value=='prates123'){document.getElementById('loginBox').style.display='none';document.getElementById('painel').style.display='block'}else{alert('Senha errada')}">Entrar - Senha prates123</button></div>
+<div id="painel" style="display:none">
+<label>Cliente e Placa</label><input id="cliente" placeholder="João - Onix OUX1234">
+<label>KM</label><input id="km" placeholder="78.345km">
+<label>Descrição completa do serviço (vai aparecer pro cliente)</label>
+<textarea id="descServ" rows="3" placeholder="Ex: Realizado limpeza freio, troca pastilha dianteira com 2mm, troca óleo 5W30..."></textarea>
+<h3 style="color:#ff6a00;margin-top:14px">Peças / Produtos adicionados (pode adicionar quantas quiser)</h3>
+<div id="listaPecas"></div>
+<button class="btn btn-add" onclick="addPeca()">+ Adicionar peça</button>
+<label>Mão de obra R$</label><input id="mao" type="number" value="120" oninput="calc()">
+<label>Desconto R$</label><input id="desc" type="number" value="0" oninput="calc()">
+<div class="card" style="border-color:#ff6a00">Total Peças: R$ <b id="tPecas">0</b> | Total Geral: R$ <b id="tGeral">0</b></div>
+<label>Garantia</label><input id="garantia" value="6 meses - peças e mão de obra">
+<label>Próxima revisão</label><input id="prox" placeholder="85.000km ou 6 meses">
+<button class="btn" onclick="gerarLink()">Gerar Link Cliente</button>
+<button class="btn" style="background:#25D366;color:#fff;display:none" id="btnZap">Enviar no WhatsApp 73 99846-0804</button>
+<p id="link" style="word-break:break-all;color:#888;margin-top:8px;font-size:12px"></p>
+</div>
+<script>
+function addPeca(n='',q=1,m='',v=''){
+ let d=document.createElement('div');d.className='item-peca';
+ d.innerHTML=`<input class="nome" placeholder="Peça ex: Pastilha Fram" value="${n}" oninput="calc()"><input class="qtd" type="number" value="${q}" oninput="calc()"><input class="valor" type="number" placeholder="R$" value="${v}" oninput="calc()"><button onclick="this.parentElement.remove();calc()" style="background:#ff4444;color:#fff;border:none;border-radius:6px">X</button><input class="marca" placeholder="Marca ex: Fram/Mobil" value="${m}" style="grid-column:span 3">`;
+ document.getElementById('listaPecas').appendChild(d);calc();
+}
+function calc(){let t=0;document.querySelectorAll('.item-peca').forEach(e=>{let q=parseFloat(e.querySelector('.qtd').value)||0;let v=parseFloat(e.querySelector('.valor').value)||0;t+=q*v});document.getElementById('tPecas').innerText=t.toFixed(2);let mao=parseFloat(document.getElementById('mao').value)||0;let d=parseFloat(document.getElementById('desc').value)||0;document.getElementById('tGeral').innerText=(t+mao-d).toFixed(2);}
+addPeca('Óleo 5W30','1','Mobil','180');addPeca('Filtro óleo','1','Fram','35');addPeca('Pastilha dianteira','1','Fram','220');
+let linkFinal='';
+function gerarLink(){
+ let lista=[];document.querySelectorAll('.item-peca').forEach(e=>{lista.push({nome:e.querySelector('.nome').value,qtd:e.querySelector('.qtd').value,marca:e.querySelector('.marca').value,valor:e.querySelector('.valor').value})});
+ let dados={cliente:document.getElementById('cliente').value,km:document.getElementById('km').value,descServ:document.getElementById('descServ').value,pecas:lista,mao:document.getElementById('mao').value,desconto:document.getElementById('desc').value,totalP:document.getElementById('tPecas').innerText,totalG:document.getElementById('tGeral').innerText,garantia:document.getElementById('garantia').value,prox:document.getElementById('prox').value};
+ let json=btoa(unescape(encodeURIComponent(JSON.stringify(dados))));
+ linkFinal=location.origin+location.pathname.replace('admin.html','')+'os.html?d='+json;
+ document.getElementById('link').innerText=linkFinal;let b=document.getElementById('btnZap');b.style.display='block';b.onclick=()=>{let msg=encodeURIComponent(`🔧 Prates Auto Center - Orçamento detalhado!\n\nCliente: ${dados.cliente}\nTotal: R$ ${dados.totalG}\n\nVeja descrição + lista de peças com marca e garantia aqui:\n${linkFinal}\n\nDúvidas? 73 99846-0804`);window.open('https://wa.me/5573998460804?text='+msg,'_blank')};
+}
+</script></body></html>
